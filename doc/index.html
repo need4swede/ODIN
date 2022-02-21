@@ -57,17 +57,18 @@
 			<p class="subtitle">Here's what <span class="color-tyr">Týr</span> looks like:</p>
 			<img class="p-img" src="https://github.com/need4swede/ODIN/blob/main/doc/img/tyr/tyr-front-end.png?raw=true" alt="tyr-gui">
 			<h3 class="subtitle">Mimir</h3>
-			<p class="description"><span class="color-mimir">Mimir</span> is the built-in console that's designed to help users perform various tasks and increase productivity. Currently, there's only
-				one module using the console [<span class="color-tyr">Týr</span>], so there's no need for a seperate program. But in time, <span class="color-mimir">Mimir</span> will run independantly from <span class="color-tyr">Týr</span> and will be able to perform
-				various tasks, such as parsing through spreadsheets for entries, ammending them, merging databases and a lot more. For now, however, <span class="color-mimir">Mimir</span> is built into <span class="color-tyr">Týr</span>.
+			<p class="description"><span class="color-mimir">Mimir</span> is the built-in console that's designed to help users perform various tasks and increase productivity, and also acts as the mediator for applications accessing stored database entries. Currently, <span class="color-tyr">Týr</span>
+				is the only application using <span class="color-mimir">Mimir</span>, but it will eventually run independantly as a CLI and will be able to perform various tasks, such as parsing through spreadsheets for entries, ammending them, merging databases and a lot more. For now, however, 
+				<span class="color-mimir">Mimir</span> is built into both <span class="color-tyr">Týr</span> and <span class="color-heimdall">Heimdall</span>.
 			</p>
-			<p class="subtitle">The release of a standalone Mimir console is TBD at this time.</p>
+			<p class="subtitle">The release of a standalone <span class="color-mimir">Mimir</span> console is TBD at this time.</p>
 			<h3 class="subtitle">Heimdall</h3>
-			<p class="description"><span class="color-heimdall">Heimdall</span>, like <span class="color-tyr">Týr</span>, is a GUI &mdash; but whereas <span class="color-tyr">Týr</span> is used to manage <span class="color-mimir">Mimir's</span> databases, <span class="color-heimdall">Heimdall</span> is used for the <em>Bifröst</em>
-				module, which manages the various databases over a network and can upload/download data structures. <span class="color-heimdall">Heimdall</span> can be invoked through <span class="color-mimir">Mimir</span> to perform the various tasks, bypassing the need for having
-				to manually manage changes to SQL databases on a server. <span class="color-heimdall">Heimdall</span> will be using the Django framework.
+			<p class="description"><span class="color-heimdall">Heimdall</span>, like <span class="color-tyr">Týr</span>, is a GUI &mdash; but whereas <span class="color-tyr">Týr</span> is used by administrators to manage <span class="color-mimir">Mimir's</span> databases, <span class="color-heimdall">Heimdall</span> is intended 
+				for end&ndash;users to acess and view designated entries from <span class="color-mimir">Mimir's</span> database using a routing module known as the <em>Bifröst</em>. <span class="color-heimdall">Heimdall</span> allows clients to see parts of <span class="color-mimir">Mimir's</span> database that they have been given access to,
+				such as assets and equipment that's been assigned to them and their department, without giving them write abilities or full access to <span class="color-tyr">Týr's</span> admin toolset. <span class="color-heimdall">Heimdall</span> will be using the Django framework and is a seperate web&ndash;application that can be accessed
+				through a browser.
 			</p>
-			<p class="subtitle">Heimdall is currently in development with no announced release date.</p>
+			<p class="subtitle"><span class="color-heimdall">Heimdall</span> is currently in development with no announced release date.</p>
 			<h3 class="subtitle">How Does It Work?</h3>
 			<h4 class="description">Administrators</h4>
 			<p class="description">
