@@ -93,7 +93,7 @@
 		</section>
 		<section class="section" id="functions">
 			<h2>Functions</h2>
-			<section class="functions tyr">
+			<section class="functions functions-tyr">
 				<span class="anchor" id="jump-tyr"></span>
 				<h3><span class="color-tyr">Týr</span></h3>
 				<i class="fa-solid fa-turn-down arrow-h4"></i>
@@ -128,32 +128,40 @@
 				<p class="p-2"><i class="fa-solid fa-circle-info"></i> There's two options here; you can assign an asset to a <em>Location</em> or you can assign it
 				to a <em>Person</em>. Assets that are assigned to locations include shared printers, routers, switches, DVR's, computer carts, etc.
 				Assets assigned to people include staff laptops, phones, tablets and other personal devices.</p>
+				<img class="p-img" src="img/tyr/tyr-asset-assignment.png" alt="Tyr Asset Assignment">
 				<p><strong>Location</strong>&mdash; Location of Asset</p>
 				<p class="p-2"><i class="fa-solid fa-circle-info"></i> In what room / building / facility the device (or <em>Person</em> whom the device is assigned
 				to) is located. The list of locations are tied to your site selection, so you can populate a different set of locations based on the chosen site.</p>
 				<p><strong>Status</strong>&mdash; Status of the Asset</p>
-				<p class="p-2"><i class="fa-solid fa-circle-info"></i> </p>
-				<p><strong>Service Tag</strong>&mdash; Serial Number or Service Tag of Asset</p>
-				<p class="p-2"><i class="fa-solid fa-circle-info"></i> </p>
+				<p class="p-2"><i class="fa-solid fa-circle-info"></i> Designate whether the asset is <em>Deployed</em>, <em>On Order</em>, or if it's <em>Obsolete</em>.
+				If it's a consumable asset, like toner cartridges for printers, this will automatically change to a <em>Quantity</em> type.</p>
+				<img class="p-img" src="img/tyr/tyr-asset-status.png" alt="Tyr Asset Status">
+				<p><strong>Reference Tag</strong>&mdash; A unique indentifier depending on the asset type</p>
+				<p class="p-2"><i class="fa-solid fa-circle-info"></i> <em>Reference</em> tags change depending on the asset. For network devices, the <em>Reference</em> is
+					their IP Address. For personal devices, the <em>Reference</em> is a Serial Number or Service Tag. In some cases, the <em>Reference</em> just defines the
+					intended purpose of the device instead of a designated serial or address.</p>
 				<p><strong>Info</strong>&mdash; Additional Information about Asset</p>
-				<p class="p-2"><i class="fa-solid fa-circle-info"></i> </p>
+				<p class="p-2"><i class="fa-solid fa-circle-info"></i> Here you can add notes and more information about the device. It can also be used as a second&ndash;level
+				indentifier. For example, if you have a lot of laptops, each with their own unique asset tag and reference tag, you can note in the <em>Info</em> section what cart
+				or cabinet [or org&ndash;unit] they belong to as another way of keeping track of a set of assets rather than individual devices.</p>
 				<p><strong>Date</strong>&mdash; Date of Asset's last change</p>
-				<p class="p-2"><i class="fa-solid fa-circle-info"></i> </p>
+				<p class="p-2"><i class="fa-solid fa-circle-info"></i> <em>Dates</em> update manually whenever you add/change an entry. The most recent date will be shown exports</p>
 			</section>
-			<section class="functions mimir">
+			<section class="functions functions-mimir">
 				<span class="anchor" id="jump-mimir"></span>
 				<h3><span class="color-mimir">Mimir</span></h3>
 				<i class="fa-solid fa-turn-down arrow-h4"></i>
-				<h4><span class="color-orange">'Run'</span> the following commands in the console:</h4>
+				<h4><span class="color-lightgreen">'Help'</span> Function:</h4>
 				<i class="fa-solid fa-turn-down arrow-p"></i>
-				<p><strong><span class="color-green">help</span></strong>&mdash; Lists available help options</p>
-				<p><strong><span class="color-green">help:</span>howto</strong>&mdash; Loads this document</p>
-				<p><strong><span class="color-green">help:</span>shortcuts</strong>&mdash; Lists available keyboard shortcuts</p>
-				<p><strong><span class="color-green">help:</span>tags</strong>&mdash; Lists available run arguments</p>
-				<aside><span class="background-grey">Mimir's <span class="color-lightgreen">help</span> function is also natively built into 
+				<p><strong><span class="color-lightgreen">help</span></strong>&mdash; Lists available help options</p>
+				<p><strong><span class="color-lightgreen">help:</span>howto</strong>&mdash; Loads this document</p>
+				<p><strong><span class="color-lightgreen">help:</span>shortcuts</strong>&mdash; Lists available keyboard shortcuts</p>
+				<p><strong><span class="color-lightgreen">help:</span>tags</strong>&mdash; Lists available run arguments</p>
+				<aside class="notes"><span class="background-notes"><i class="fa-solid fa-terminal"></i> <span class="color-lightgreen">help</span>:<span class="color-dark-orange">command</span>
+					<br><span class="color-mimir">Mimir's</span> <span class="color-lightgreen">help</span> function is also natively built into 
 					the error handling, and will display appropriate options based on the error</span></aside>
 			</section>
-			<section class="functions heimdall">
+			<section class="functions functions-heimdall">
 				<span class="anchor" id="jump-heimdall"></span>
 				<h3><span class="color-heimdall">Heimdall</span></h3>
 				<i class="fa-solid fa-turn-down arrow-h4"></i>
