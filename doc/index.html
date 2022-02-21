@@ -63,14 +63,30 @@
 			</p>
 			<p class="subtitle">The release of a standalone Mimir console is TBD at this time.</p>
 			<h3 class="subtitle">Heimdall</h3>
-			<p class="description"><span class="color-heimdall">Heimdall</span>, like <span class="color-tyr">Týr</span>, is a GUI &mdash; but whereas <span class="color-tyr">Týr</span> is used to manage <span class="color-mimir">Mimir's</span> databases, <span class="color-heimdall">Heimdall</span> is used for the Bifröst
+			<p class="description"><span class="color-heimdall">Heimdall</span>, like <span class="color-tyr">Týr</span>, is a GUI &mdash; but whereas <span class="color-tyr">Týr</span> is used to manage <span class="color-mimir">Mimir's</span> databases, <span class="color-heimdall">Heimdall</span> is used for the <em>Bifröst</em>
 				module, which manages the various databases over a network and can upload/download data structures. <span class="color-heimdall">Heimdall</span> can be invoked through <span class="color-mimir">Mimir</span> to perform the various tasks, bypassing the need for having
 				to manually manage changes to SQL databases on a server. <span class="color-heimdall">Heimdall</span> will be using the Django framework.
 			</p>
 			<p class="subtitle">Heimdall is currently in development with no announced release date.</p>
 			<h3 class="subtitle">How Does It Work?</h3>
+			<h4 class="description">Administrators</h4>
 			<p class="description">
-				How it works....
+				When an admin runs ODIN, the system verifies your credentials and a request is sent to <span class="color-tyr">Týr</span>, the admin front-end module. 
+				<span class="color-tyr">Týr</span> then communicates with <span class="color-mimir">Mimir</span>, the system responsible for database entries and amemmendments.
+				These two work together, <span class="color-tyr">Týr</span> acting as the console interface and <span class="color-mimir">Mimir</span> managing the back-end database. 
+			</p>
+			<h4 class="description">Clients</h4>
+			<p class="description">
+				When client users run ODIN, or admins accessing the system outside of their network, the requests need to first pass through <span class="color-heimdall">Heimdall</span>
+				to grant database access. <span class="color-heimdall">Heimdall</span> acts as a gatekeeper, only granting users access to parts of <span class="color-mimir">Mimir's</span>
+				database. The various credentials are setup within a configuration called the <em>Bifröst,</em> which <span class="color-heimdall">Heimdall</span> uses to authenticate access. 
+				<span class="color-heimdall">Heimdall</span>, unlike <span class="color-tyr">Týr</span>, does not have any admninistrating properties and is only used to view data. However,
+				<span class="color-heimdall">Heimdall</span> will allow users to send requests to administrators in the form of notations, called <em>Ravens</em>, which admins can use to fulfill client
+				side requests. 
+			</p>
+			<p class="description">
+				Together, these modules allow administrators to create and manage multiple databases using an intuative and fully modular GUI, and designate access to appropriate end&ndash;users
+				with a seperate client&ndash;side GUI. This is a great way to manage assets, equipment, licenses, technical knowledge, and lots more <em>&mdash; and it is 100% free and open sourced.</em>
 			</p>
 			<img class="p-img" src="https://github.com/need4swede/ODIN/blob/main/doc/img/graph.png?raw=true" alt="tyr-gui">
 		</section>

@@ -266,7 +266,7 @@ strong {
 /* FIRST SECTION
 /*************************/
 
-#introduction p {
+#introduction p, #introduction .description {
      margin: 2% 10%;
 }
 
