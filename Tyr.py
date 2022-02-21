@@ -7,7 +7,7 @@
 
 ## LIBRARY IMPORTS ################################################
 import darkdetect 
-import os, database_1, database_2, sqlite3, sys, string, os.path
+import os, database_1, database_2, sqlite3, sys, platform, string, os.path, webbrowser
 from clear_term import clear_term
 from PyQt6 import *
 from csv import reader
@@ -760,7 +760,7 @@ class MainWindow(QMainWindow):
                 try:
                     QMessageBox.information(
                         QMessageBox(), "Help", "Add arguments to your help query to find answers."
-                        "\n\n'help:howto' - Opens program documentation"
+                        "\n\n'help:readme' - Opens program documentation"
                         "\n\n'help:tags' - List search query tags"
                         "\n\n'help:shortcuts' - List available keyboard shortcuts")
                 except Exception:
@@ -779,6 +779,16 @@ class MainWindow(QMainWindow):
                     QMessageBox.information(
                             QMessageBox(), "Help: Shortcuts", "Keyboard Shortcuts\n\n\nCTRL+S: Run Search\n\nCTRL+I: ID Search\n\nCTRL+T: Asset Tag Search\n\n"
                             "CTRL+R: Run Console\n\nCTRL+Return: Add Entry\n\nCTRL+D: Delete Entry\n\nCTRL+E: Export to CSV\n\nALT+R: Refresh")
+                elif help_requested[1] == "README":
+                    online_readme = True
+                    if(online_readme):
+                        readme = ("https://need4swede.github.io/ODIN/doc/index.html")
+                    else:
+                        readme = (root_dir + "/doc/index.html")
+                        if platform.system() == "Darwin":
+                            print("isMac")
+                            readme = ("file:///" + readme)
+                    webbrowser.open(readme)
                 else:
                     QMessageBox.information(
                         QMessageBox(), "Help", "Add arguments to your help query to find answers."
