@@ -76,12 +76,32 @@ body {
      color:limegreen;
 }
 
+.color-purple {
+     color: rgb(145, 6, 163);
+}
+
 .color-orange {
      color: orange;
 }
 
 .color-yellow {
      color: yellow;
+}
+
+/*************************
+/* MODULE COLORS
+/*************************/
+
+.color-mimir {
+     color: rgb(0, 148, 86);
+}
+
+.color-heimdall {
+     color: rgb(145, 6, 163);
+}
+
+.color-tyr {
+     color: orange;
 }
 
 /*************************
@@ -128,7 +148,7 @@ body {
 /*************************/
 
 strong {
-     color: blue;
+     color: red;
 }
 
 /******************************************
