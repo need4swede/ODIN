@@ -10,8 +10,8 @@ from sqlite3.dbapi2 import Date
 import pandas as pd
 ## DIRECTORY ######################################################
 root_dir = os.path.dirname(os.path.abspath(__file__))
-inventory_db = root_dir + "/inventory.db"
-csv_name = 'IT_Inventory.csv'
+inventory_db = root_dir + "/Mimir.db"
+csv_name = 'Mimir_Export.csv'
 ## INPUT LABELS ###################################################
 lb_id = "ID #"
 lb_1 = "Site:"

@@ -11,7 +11,7 @@ from sqlite3 import Error
 import pandas as pd
 ## DIRECTORY ######################################################
 root_dir = os.path.dirname(os.path.abspath(__file__))
-inventory_db = root_dir + "/inventory.db"
+inventory_db = root_dir + "/Mimir.db"
 csv_name = 'Previously_Owned_Dinosaurs.csv'
 ## INPUT LABELS ###################################################
 lb_id = "ID #"

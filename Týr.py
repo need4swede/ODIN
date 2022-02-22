@@ -28,7 +28,7 @@ with open(root_dir + "/users.csv", 'r') as read_obj:
 ###################################################################
 ## DIRECTORY ######################################################
 global inventory_db
-inventory_db = root_dir + "/inventory.db"
+inventory_db = root_dir + "/Mimir.db"
 date_today = date.today()
 today = date_today.strftime("%B %d,  %Y")
 ## ICONS/IMAGES  ##############
@@ -135,7 +135,7 @@ if app_info:
     app_title = "Týr"
     app_version = "Version: 2.0"
     info_title = "About"
-    app_description = "The Adaptive Asset Management System"
+    app_description = "ODIN's Adaptive Asset Management System"
     app_framework = "Python 3.9 / PyQt6 / SQLite3"
     app_contact = "Contact: Need4Swede | theneed4swede@gmail.com"
 ## DATABASES ######################################################
