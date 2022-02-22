@@ -6,8 +6,10 @@
 # #################################################################
 
 ## LIBRARY IMPORTS ################################################
-import darkdetect 
-import os, database_1, database_2, sqlite3, sys, platform, string, os.path, webbrowser
+import darkdetect
+import Mimisbrunnr.Mimisbrunnr_1 as Mimisbrunnr_1 
+import Mimisbrunnr.Mimisbrunnr_2 as Mimisbrunnr_2
+import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil
 from clear_term import clear_term
 from PyQt6 import *
 from csv import reader
@@ -28,41 +30,51 @@ with open(root_dir + "/users.csv", 'r') as read_obj:
 ###################################################################
 ## DIRECTORY ######################################################
 global inventory_db
-inventory_db = root_dir + "/Mimir.db"
+mimir_dir = (root_dir + "/Mimir")
+mimisbrunnr_dir = (root_dir + "/Mimisbrunnr")
+documentation_dir = (root_dir + "/Documentation")
+if not os.path.isdir(mimir_dir):
+    os.makedirs(mimir_dir)
+if os.path.isdir(documentation_dir):
+    if os.path.isdir(mimir_dir + "/Documentation"):
+        shutil.rmtree(mimir_dir + "/Documentation")
+    shutil.copytree(documentation_dir, mimir_dir + "/Documentation")
+    shutil.rmtree(documentation_dir) 
+inventory_db = mimir_dir + "/Mimir.db"
 date_today = date.today()
 today = date_today.strftime("%B %d,  %Y")
 ## ICONS/IMAGES  ##############
 app_icons = True
 if app_icons:
-    png_lab = root_dir + "/icon/lab.png"
-    png_add = root_dir + "/icon/add.png"
-    png_delete = root_dir + "/icon/delete.png"
-    png_search = root_dir + "/icon/search.png"
-    png_run = root_dir + "/icon/run.png"
-    png_info = root_dir + "/icon/information.png"
-    png_view = root_dir + "/icon/view.png"
-    png_export = root_dir + "/icon/export.png"
-    png_clear = root_dir + "/icon/clear.png"
-    png_refresh = root_dir + "/icon/refresh.png"
-    png_update = root_dir + "/icon/update.png"
-    png_move = root_dir + "/icon/move.png"
-    png_logo = root_dir + "/icon/tyr-icon.png"
-    png_db_primary = root_dir + "/icon/tyr-icon.png"
+    png_lab = root_dir + "/Týr/Icons/lab.png"
+    png_add = root_dir + "/Týr/Icons/add.png"
+    png_delete = root_dir + "/Týr/Icons/delete.png"
+    png_search = root_dir + "/Týr/Icons/search.png"
+    png_run = root_dir + "/Týr/Icons/run.png"
+    png_info = root_dir + "/Týr/Icons/information.png"
+    png_view = root_dir + "/Týr/Icons/view.png"
+    png_export = root_dir + "/Týr/Icons/export.png"
+    png_clear = root_dir + "/Týr/Icons/clear.png"
+    png_refresh = root_dir + "/Týr/Icons/refresh.png"
+    png_update = root_dir + "/Týr/Icons/update.png"
+    png_move = root_dir + "/Týr/Icons/move.png"
+    png_logo = root_dir + "/Týr/Icons/tyr-icon.png"
+    png_db_primary = root_dir + "/Týr/Icons/tyr-icon.png"
 if darkdetect.isDark():
-    png_lab = root_dir + "/icon/dark/lab.png"
-    png_add = root_dir + "/icon/dark/add.png"
-    png_delete = root_dir + "/icon/dark/delete.png"
-    png_search = root_dir + "/icon/dark/search.png"
-    png_run = root_dir + "/icon/dark/run.png"
-    png_info = root_dir + "/icon/dark/information.png"
-    png_view = root_dir + "/icon/dark/view.png"
-    png_export = root_dir + "/icon/dark/export.png"
-    png_clear = root_dir + "/icon/dark/clear.png"
-    png_refresh = root_dir + "/icon/dark/refresh.png"
-    png_update = root_dir + "/icon/dark/update.png"
-    png_move = root_dir + "/icon/dark/move.png"
-    png_logo = root_dir + "/icon/dark/tyr-icon.png"
-    png_db_primary = root_dir + "/icon/dark/tyr-icon.png"
+    png_lab = root_dir + "/Týr/Icons/dark/lab.png"
+    png_add = root_dir + "/Týr/Icons/dark/add.png"
+    png_delete = root_dir + "/Týr/Icons/dark/delete.png"
+    png_search = root_dir + "/Týr/Icons/dark/search.png"
+    png_run = root_dir + "/Týr/Icons/dark/run.png"
+    png_info = root_dir + "/Týr/Icons/dark/information.png"
+    png_view = root_dir + "/Týr/Icons/dark/view.png"
+    png_export = root_dir + "/Týr/Icons/dark/export.png"
+    png_clear = root_dir + "/Týr/Icons/dark/clear.png"
+    png_refresh = root_dir + "/Týr/Icons/dark/refresh.png"
+    png_update = root_dir + "/Týr/Icons/dark/update.png"
+    png_move = root_dir + "/Týr/Icons/dark/move.png"
+    png_logo = root_dir + "/Týr/Icons/dark/tyr-icon.png"
+    png_db_primary = root_dir + "/Týr/Icons/dark/tyr-icon.png"
 ## INPUT LABELS ###################################################
 ## MAIN LABELS  ###############
 main_labels = True
@@ -138,12 +150,12 @@ if app_info:
     app_description = "ODIN's Adaptive Asset Management System"
     app_framework = "Python 3.9 / PyQt6 / SQLite3"
     app_contact = "Contact: Need4Swede | theneed4swede@gmail.com"
-## DATABASES ######################################################
-app_database = True
-if app_database:
-    db_primary = "Database 1"
-    db_secondary = "Database 2"
-    db_tertiary = "Database 3"
+## MimisbrunnrS ######################################################
+app_Mimisbrunnr = True
+if app_Mimisbrunnr:
+    db_primary = "Mimisbrunnr 1"
+    db_secondary = "Mimisbrunnr 2"
+    db_tertiary = "Mimisbrunnr 3"
 ###################################################################
 ## CLEAR TERMINAL
 clear_term()
@@ -418,18 +430,18 @@ class MainWindow(QMainWindow):
 
     def load_data(self):
         if self.key == db_primary:
-            self.result = database_1.show_table()
+            self.result = Mimisbrunnr_1.show_table()
         elif self.key == db_secondary:
             #self.tableWidget.setColumnCount(9)
-            self.result = database_2.show_table()
+            self.result = Mimisbrunnr_2.show_table()
         self.display()
     
     def load_data_2(self):
         if self.key == db_primary:
-            self.result = database_2.show_table()
+            self.result = Mimisbrunnr_2.show_table()
         elif self.key == db_secondary:
             #self.tableWidget.setColumnCount(9)
-            self.result = database_1.show_table()
+            self.result = Mimisbrunnr_1.show_table()
         self.display()
 
     def display(self):
@@ -483,7 +495,7 @@ class MainWindow(QMainWindow):
             dates = self.item_info_window.dates_db1.text()
             notes = self.item_info_window.notes_db1.text()
             user = self.item_info_window.site_db1.currentText()
-            database_1.add_row(user, location, product, manufacturer, description, package,
+            Mimisbrunnr_1.add_row(user, location, product, manufacturer, description, package,
                                   assigned, status, dates, notes)
         elif self.key == db_secondary:
             description = self.item_info_window.description_db2.text()
@@ -497,7 +509,7 @@ class MainWindow(QMainWindow):
             status = self.item_info_window.status_db2.text()
             dates = self.item_info_window.dates_db2.text()
             notes = self.item_info_window.notes_db2.text()
-            database_2.add_row(location, description, package, product,
+            Mimisbrunnr_2.add_row(location, description, package, product,
                                  manufacturer, assigned, status, dates, notes)
 
         self.load_data()
@@ -558,7 +570,7 @@ class MainWindow(QMainWindow):
             dates = self.item_info_window.dates_db1.text()
             notes = self.item_info_window.notes_db1.text()
 
-            self.result = database_1.search_rows(
+            self.result = Mimisbrunnr_1.search_rows(
                 description, location, product, package, assigned, manufacturer, status, dates, notes)
 
         elif self.key == db_secondary:
@@ -569,7 +581,7 @@ class MainWindow(QMainWindow):
             status = self.item_info_window.status_db2.text()
             dates = self.item_info_window.dates_db2.text()
             notes = self.item_info_window.notes_db2.text()
-            self.result = database_2.search_rows(
+            self.result = Mimisbrunnr_2.search_rows(
                 description, location, product, status, dates, notes)
 
         self.display()
@@ -579,7 +591,7 @@ class MainWindow(QMainWindow):
         ## SEARCH BY ID
         try:
             if self.key == db_primary:
-                first_matched_item = database_1.search_row(id)
+                first_matched_item = Mimisbrunnr_1.search_row(id)
                 self.item_info_window.item_db1_id_label.setText(
                     "Item id:{:>35}".format(id))
                 self.item_info_window.site_db1.clear()
@@ -614,7 +626,7 @@ class MainWindow(QMainWindow):
                 self.item_info_window.notes_db1.setText(
                     str(first_matched_item[10]))
             elif self.key == db_secondary:
-                first_matched_item = database_2.search_row(id)
+                first_matched_item = Mimisbrunnr_2.search_row(id)
                 self.item_info_window.item_db2_id_label.setText(
                     "Item id:{:>35}".format(id))
                 self.item_info_window.location_db2.setText(
@@ -671,7 +683,7 @@ class MainWindow(QMainWindow):
                     for row_count in range(1,500):
                         # clear_term()
                         ## list_row lists all the values in the given row using .search_row
-                        list_row = database_1.search_row(row_count)
+                        list_row = Mimisbrunnr_1.search_row(row_count)
                         ## item_asset_tag equals the fifth element in the row, which is the asset tag
                         try:
                             item_asset_tag = list_row[5]
@@ -683,7 +695,7 @@ class MainWindow(QMainWindow):
                         try:
                             if asset_tag_no in item_asset_tag:
                                 while run_search:
-                                    first_matched_item = database_1.search_row(row_count)
+                                    first_matched_item = Mimisbrunnr_1.search_row(row_count)
                                     self.item_info_window.item_db1_id_label.setText(
                                         "Item id:{:>35}".format(row_count))
                                     self.item_info_window.site_db1.clear()
@@ -782,9 +794,9 @@ class MainWindow(QMainWindow):
                 elif help_requested[1] == "README":
                     online_readme = True
                     if(online_readme):
-                        readme = ("https://need4swede.github.io/ODIN/doc/index.html")
+                        readme = ("https://need4swede.github.io/ODIN/Documentation/readme.html")
                     else:
-                        readme = (root_dir + "/doc/index.html")
+                        readme = (root_dir + "/Documentation/readme.html")
                         if platform.system() == "Darwin":
                             print("isMac")
                             readme = ("file:///" + readme)
@@ -927,9 +939,9 @@ class MainWindow(QMainWindow):
             site = self.item_info_window.site_db1.currentText()
             print("\nCurrent Text:", str(self.item_info_window.status_db1.itemText(
                 self.item_info_window.status_db1.currentIndex())))
-            database_1.update_row(id, site, location, product, manufacturer, asset_tag,
+            Mimisbrunnr_1.update_row(id, site, location, product, manufacturer, asset_tag,
                                   package, assigned, status, dates, notes)
-            # database_1.update_row(id, location, product, asset_tag, manufacturer, package,
+            # Mimisbrunnr_1.update_row(id, location, product, asset_tag, manufacturer, package,
             #                       assigned, status, dates, notes)
 
         elif self.key == db_secondary:
@@ -944,7 +956,7 @@ class MainWindow(QMainWindow):
             status = self.item_info_window.status_db2.text()
             dates = self.item_info_window.dates_db2.text()
             notes = self.item_info_window.notes_db2.text()
-            database_2.update_row(id, description, location, product,
+            Mimisbrunnr_2.update_row(id, description, location, product,
                                    package, assigned, manufacturer, status, dates, notes)
 
         QMessageBox.information(
@@ -959,14 +971,14 @@ class MainWindow(QMainWindow):
         self.msgSearch = QMessageBox()
         try:
             if self.key == db_primary:
-                row = database_1.search_row(id)
+                row = Mimisbrunnr_1.search_row(id)
                 search_result = lb_id+"    "+str(row[0])+"\n"+lb_location+"     "+str(row[1])+"\n"+lb_product+"     "+str(row[2])+"\n"   \
                                 + lb_make+"     "+str(row[3])+"\n"+lb_asset+"     "+str(row[4])+"\n"+lb_reference+"     "+str(row[5])+"\n"+lb_assigned+"     " + str(row[6])+"\n" \
                                 + lb_status+"     " + \
                     str(row[7])+"\n"+lb_date+"     " + \
                     str(row[8])+"\n"+lb_info+"   "+str(row[9])
             elif self.key == db_secondary:
-                row = database_2.search_row(id)
+                row = Mimisbrunnr_2.search_row(id)
                 search_result = lb_id+"    "+str(row[0])+"\n"+lb_location+"     "+str(row[1])+"\n"+lb_product+"     "+str(row[2])+"\n"   \
                                 + lb_make+"     "+str(row[3])+"\n"+lb_asset+"     "+str(row[4])+"\n"+lb_reference+"     "+str(row[5])+"\n"+lb_assigned+"     " + str(row[6])+"\n" \
                                 + lb_status+"     " + \
@@ -981,7 +993,7 @@ class MainWindow(QMainWindow):
             ret = self.msgSearch.exec()
             if ret == QMessageBox.StandardButton.Yes:
                 if self.key == db_primary:
-                    database_1.delete_row(id)
+                    Mimisbrunnr_1.delete_row(id)
                     self.item_info_window.item_db1_id_label.setText(lb_id)
                     self.item_info_window.site_db1.clear()
                     self.item_info_window.product_db1.clear()
@@ -994,7 +1006,7 @@ class MainWindow(QMainWindow):
                     self.item_info_window.dates_db1.clear()
                     self.item_info_window.notes_db1.clear()
                 elif self.key == db_secondary:
-                    database_2.delete_row(id)
+                    Mimisbrunnr_2.delete_row(id)
                     self.item_info_window.item_db2_id_label.setText(lb_id)
                     self.item_info_window.description_db2.clear()
                     self.item_info_window.location_db2.clear()
@@ -1017,14 +1029,14 @@ class MainWindow(QMainWindow):
         self.msgSearch = QMessageBox()
         try:
             if self.key == db_primary:
-                row = database_1.search_row(id)
+                row = Mimisbrunnr_1.search_row(id)
                 search_result = lb_id+"    "+str(row[0])+"\n"+lb_location+"     "+str(row[1])+"\n"+lb_product+"     "+str(row[2])+"\n"   \
                                 + lb_make+"     "+str(row[3])+"\n"+lb_asset+"     "+str(row[4])+"\n"+lb_reference+"     "+str(row[5])+"\n"+lb_assigned+"     " + str(row[6])+"\n" \
                                 + lb_status+"     " + \
                     str(row[7])+"\n"+lb_date+"     " + \
                     str(row[8])+"\n"+lb_info+"   "+str(row[9])
             elif self.key == db_secondary:
-                row = database_2.search_row(id)
+                row = Mimisbrunnr_2.search_row(id)
                 search_result = lb_id+"    "+str(row[0])+"\n"+lb_location+"     "+str(row[1])+"\n"+lb_product+"     "+str(row[2])+"\n"   \
                                 + lb_make+"     "+str(row[3])+"\n"+lb_asset+"     "+str(row[4])+"\n"+lb_reference+"     "+str(row[5])+"\n"+lb_assigned+"     " + str(row[6])+"\n" \
                                 + lb_status+"     " + \
@@ -1038,7 +1050,7 @@ class MainWindow(QMainWindow):
             ret = self.msgSearch.exec()
             if ret == QMessageBox.StandardButton.Yes:
                 if self.key == db_primary:
-                    database_1.delete_row(id)
+                    Mimisbrunnr_1.delete_row(id)
                     self.item_info_window.item_db1_id_label.setText(lb_id)
                     self.item_info_window.assettag_db1.clear()
                     self.item_info_window.location_db1.clear()
@@ -1048,7 +1060,7 @@ class MainWindow(QMainWindow):
                     self.item_info_window.dates_db1.clear()
                     self.item_info_window.notes_db1.clear()
                 elif self.key == db_secondary:
-                    database_2.delete_row(id)
+                    Mimisbrunnr_2.delete_row(id)
                     self.item_info_window.item_db2_id_label.setText(lb_id)
                     self.item_info_window.description_db2.clear()
                     self.item_info_window.location_db2.clear()
@@ -1078,7 +1090,7 @@ class MainWindow(QMainWindow):
             status = self.item_info_window.status_db1.text()
             dates = self.item_info_window.dates_db1.text()
             notes = self.item_info_window.notes_db1.text()
-            database_2.add_row(location, description, package, product,
+            Mimisbrunnr_2.add_row(location, description, package, product,
                                  manufacturer, assigned, status, dates, notes)
         elif self.key == db_secondary:
             description = self.item_info_window.description_db2.text()
@@ -1092,7 +1104,7 @@ class MainWindow(QMainWindow):
             status = self.item_info_window.status_db2.text()
             dates = self.item_info_window.dates_db2.text()
             notes = self.item_info_window.notes_db2.text()
-            database_1.add_row(location, description, package, product,
+            Mimisbrunnr_1.add_row(location, description, package, product,
                                  manufacturer, assigned, status, dates, notes)
 
         self.delete_move()
@@ -1101,9 +1113,9 @@ class MainWindow(QMainWindow):
     def export(self):
         try:
             if self.key == db_primary:
-                database_1.to_csv()
+                Mimisbrunnr_1.to_csv()
             elif self.key == db_secondary:
-                database_2.to_csv()
+                Mimisbrunnr_2.to_csv()
             QMessageBox.information(
                 QMessageBox(), "File export", "Export to CSV successfully")
         except Exception:
@@ -1168,9 +1180,9 @@ class EntryWindow(QWidget):
         self.setLayout(layout)
 
         # Label
-        self.database_label = QLabel("Database")
-        self.database_label.setFont(QFont("Arial", 14))
-        self.database_label.setFixedSize(100, 30)
+        self.Mimisbrunnr_label = QLabel("Mimisbrunnr")
+        self.Mimisbrunnr_label.setFont(QFont("Arial", 14))
+        self.Mimisbrunnr_label.setFixedSize(100, 30)
         self.item_label_db1 = QLabel("Item Information")
         self.item_label_db1.setFont(QFont("Arial", 14))
         self.item_label_db1.setFixedSize(250, 40)
@@ -1189,7 +1201,7 @@ class EntryWindow(QWidget):
         # self.picLabel.setFixedHeight(300)
         
 
-        # Create and connect the combo box to switch between different inventory database
+        # Create and connect the combo box to switch between different inventory Mimisbrunnr
         self.pageCombo = QComboBox()
         self.pageCombo.addItems(
             [db_primary, db_secondary, db_tertiary])
@@ -1197,14 +1209,14 @@ class EntryWindow(QWidget):
 
         # Layouts
         self.stackedLayout = QStackedLayout()
-        sub_layout.addWidget(self.database_label)
+        sub_layout.addWidget(self.Mimisbrunnr_label)
         sub_layout.addWidget(self.pageCombo)
         sub_layout.addWidget(self.picLabel)
         layout.addLayout(sub_layout)
         layout.addLayout(self.stackedLayout)
 
         # -------------------------- #
-        #      Primary Database      #
+        #      Primary Mimisbrunnr      #
         # -------------------------- #
         self.page_db1 = QWidget()
         self.page_db1_layout = QVBoxLayout()
@@ -1260,7 +1272,7 @@ class EntryWindow(QWidget):
         self.stackedLayout.addWidget(self.page_db1)
 
         # -------------------------- #
-        #     Secondary Database     #
+        #     Secondary Mimisbrunnr     #
         # -------------------------- #
         self.page_db2 = QWidget()
         self.page_db2_layout = QVBoxLayout()
@@ -1608,14 +1620,14 @@ class mainWin(QMainWindow):
         
     #     ### open button
     #     open_icon = self.style().standardIcon(QStyle.SP_DialogOpenButton)
-    #     open_btn = QToolButton(text = "Open", icon = open_icon)
+    #     open_btn = QToolButton(text = "Open", Týr/Icons = open_icon)
     #     open_btn.clicked.connect(self.open_file)
     #     open_btn.setStyleSheet("QToolButton:hover {background: #a5dcff;}")
     #     self.toolbar.addWidget(open_btn)
         
     #     ### open button
     #     save_icon = self.style().standardIcon(QStyle.SP_DialogSaveButton)
-    #     save_btn = QToolButton(text = "Save", icon = save_icon)
+    #     save_btn = QToolButton(text = "Save", Týr/Icons = save_icon)
     #     save_btn.clicked.connect(self.save_file)
     #     save_btn.setStyleSheet("QToolButton:hover {background: #a5dcff;}")
     #     self.toolbar.addWidget(save_btn) 
@@ -1683,22 +1695,22 @@ class mainWin(QMainWindow):
                 column += 1
             row += 1
 
-## DATABASE #######################################################
+## Mimisbrunnr #######################################################
 if __name__ == "__main__":
-    database_exists = os.path.isfile(inventory_db)
+    mimir_exists = os.path.isfile(inventory_db)
 
-    if database_exists:
+    if mimir_exists:
         open(inventory_db, "r+")
     else:
         open(inventory_db, "w")
-        database_1.create_table_db1()
-        database_2.create_table_db2()
+        Mimisbrunnr_1.create_table_db1()
+        Mimisbrunnr_2.create_table_db2()
 
     app = QApplication(sys.argv)
     if QDialog.accepted:
         window = MainWindow()
         window.show()
-        window.key = db_primary     # Default Database to load
+        window.key = db_primary     # Default Mimisbrunnr to load
         window.load_data()
     # NEW
     win = mainWin()
@@ -1706,4 +1718,3 @@ if __name__ == "__main__":
     #win.show()
     # /NEW
     sys.exit(app.exec())
-

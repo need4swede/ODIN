@@ -1,17 +1,21 @@
 # ##################################################################
-# File name:    database_1.py
+# File name:    Mimisbrunnr_1.py
 # Author:       Need4Swede
 # Create on:    2021-11-20
-# Description:  Backend module for managing the database1 database
+# Description:  Backend module for managing the Mimisbrunnr_1 Database
 # ##################################################################
-import sqlite3, os
+import sqlite3, os, sys
 from sqlite3 import Error
 from sqlite3.dbapi2 import Date
 import pandas as pd
 ## DIRECTORY ######################################################
 root_dir = os.path.dirname(os.path.abspath(__file__))
-inventory_db = root_dir + "/Mimir.db"
-csv_name = 'Mimir_Export.csv'
+path_parent = os.path.dirname(os.getcwd())
+mimir_dir = (path_parent + "/Mimir")
+if not os.path.isdir(mimir_dir):
+    os.makedirs(mimir_dir)
+inventory_db = mimir_dir + "/Mimir.db"
+csv_name = '/Mimisbrunnr_1.csv'
 ## INPUT LABELS ###################################################
 lb_id = "ID #"
 lb_1 = "Site:"
@@ -27,11 +31,11 @@ lb_9 = "Link/Date:"
 ###################################################################
 
 def create_table_db1():
-    # Connect to a database
+    # Connect to a Mimisbrunnr
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
     # Create a table
-    c.execute("""CREATE TABLE IF NOT EXISTS database1 (
+    c.execute("""CREATE TABLE IF NOT EXISTS Mimisbrunnr_1 (
                                 Site text,
                                 Location text,
                                 Product text,
@@ -52,7 +56,7 @@ def create_table_db1():
 def add_row(Site="", Location="", Product="", Make="", Asset_Tag="", Reference="", Assigned="", Status="", Date="", Info=""):
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
-    c.execute("INSERT INTO database1 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    c.execute("INSERT INTO Mimisbrunnr_1 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
               (Site, Location, Product, Make, Asset_Tag, Reference, Assigned, Status, Date, Info))
     conn.commit()
     conn.close()
@@ -62,7 +66,7 @@ def add_rows(information):
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
     c.executemany(
-        "INSERT INTO database1 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", information)
+        "INSERT INTO Mimisbrunnr_1 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", information)
     conn.commit()
     conn.close()
 
@@ -73,7 +77,7 @@ def search_row(id=""):
     if not id:
         id = "some words"
     try:
-        c.execute("SELECT rowid, * from database1 WHERE rowid=?", (id,))
+        c.execute("SELECT rowid, * from Mimisbrunnr_1 WHERE rowid=?", (id,))
     except Error as e:
         print(e)
     row = c.fetchone()
@@ -108,7 +112,7 @@ def search_rows(Site="", Location="", Product="", Make="", Asset_Tag="", Referen
         Info = "some words"
 
     try:
-        c.execute("""SELECT rowid, * FROM database1 WHERE 
+        c.execute("""SELECT rowid, * FROM Mimisbrunnr_1 WHERE 
                     Site=? OR Location=? OR Product=? OR
                     Make=? OR Asset_Tag=? OR Reference=? OR Assigned=? OR
                     Status=? OR Date=? OR Info=?""",
@@ -131,7 +135,7 @@ def delete_row(id=""):
     c = conn.cursor()
     if not id:
         id = "some words"
-    c.execute("DELETE FROM database1 WHERE rowid=?", (id,))
+    c.execute("DELETE FROM Mimisbrunnr_1 WHERE rowid=?", (id,))
     conn.commit()
     conn.close()
 
@@ -139,7 +143,7 @@ def delete_row(id=""):
 def update_row(id="", Site="", Location="", Product="", Make="", Asset_Tag="", Reference="", Assigned="", Status="", Date="", Info=""):
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
-    c.execute("""UPDATE database1 SET Site=?, Location=?, Product=?, Make=?, Asset_Tag=?, Reference=?, Assigned=?, Status=?, Date=?, Info=? WHERE rowid=?""",
+    c.execute("""UPDATE Mimisbrunnr_1 SET Site=?, Location=?, Product=?, Make=?, Asset_Tag=?, Reference=?, Assigned=?, Status=?, Date=?, Info=? WHERE rowid=?""",
               (Site, Location, Product, Make, Asset_Tag, Reference, Assigned, Status, Date, Info, int(id)))
     conn.commit()
     conn.close()
@@ -148,10 +152,10 @@ def update_row(id="", Site="", Location="", Product="", Make="", Asset_Tag="", R
 def show_table():
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
-    # if name == "database1":
-    c.execute("SELECT rowid, * FROM database1")
-    # elif name == "database2":
-    # c.execute("SELECT rowid, * FROM database2")
+    # if name == "Mimisbrunnr_1":
+    c.execute("SELECT rowid, * FROM Mimisbrunnr_1")
+    # elif name == "Mimisbrunnr_1":
+    # c.execute("SELECT rowid, * FROM Mimisbrunnr_1")
     rows = c.fetchall()
     # for row in rows:
     #     print(row)
@@ -162,10 +166,13 @@ def show_table():
 
 
 def to_csv():
+    export_dir = (root_dir + "/exports")
     conn = sqlite3.connect(inventory_db, detect_types=sqlite3.PARSE_COLNAMES)
-    db_df = pd.read_sql_query("SELECT * FROM database1", conn)
+    db_df = pd.read_sql_query("SELECT * FROM Mimisbrunnr_1", conn)
     sorted_df = db_df.sort_values(by=["Product"], ascending=True)
-    sorted_df.to_csv(csv_name, index=False)
+    if not os.path.isdir(export_dir):
+        os.makedirs(export_dir)
+    sorted_df.to_csv(export_dir + csv_name, index=False)
 
 
 def main():

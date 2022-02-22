@@ -1,8 +1,8 @@
 # ##################################################################
-# File name:    database_2.py
+# File name:    Mimisbrunnr_2.py
 # Author:       Zhangshun Lu
 # Create on:    2021-04-20
-# Description:  Backend module for managing the database2 database
+# Description:  Backend module for managing the Mimisbrunnr_1 Mimisbrunnr
 # ##################################################################
 
 
@@ -11,7 +11,10 @@ from sqlite3 import Error
 import pandas as pd
 ## DIRECTORY ######################################################
 root_dir = os.path.dirname(os.path.abspath(__file__))
-inventory_db = root_dir + "/Mimir.db"
+mimir_dir = (root_dir + "/Mimir")
+if not os.path.isdir(mimir_dir):
+    os.makedirs(mimir_dir)
+inventory_db = mimir_dir + "/Mimir.db"
 csv_name = 'Previously_Owned_Dinosaurs.csv'
 ## INPUT LABELS ###################################################
 lb_id = "ID #"
@@ -28,11 +31,11 @@ lb_9 = "Link/Notes:"
 ###################################################################
 
 def create_table_db2():
-    # Connect to a database
+    # Connect to a Mimisbrunnr
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
     # Create a table
-    c.execute("""CREATE TABLE IF NOT EXISTS database2 (
+    c.execute("""CREATE TABLE IF NOT EXISTS Mimisbrunnr_1 (
                                 Scale text,
                                 Studio text,
                                 Name text,
@@ -52,7 +55,7 @@ def create_table_db2():
 def add_row(scale="", studio="", name="", type="", species="", value="", buyer="", year="", notes=""):
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
-    c.execute("INSERT INTO database2 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    c.execute("INSERT INTO Mimisbrunnr_1 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
               (scale, studio, name, type, species, value, buyer, year, notes))
     conn.commit()
     conn.close()
@@ -62,7 +65,7 @@ def add_rows(information):
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
     c.executemany(
-        "INSERT INTO database2 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", information)
+        "INSERT INTO Mimisbrunnr_1 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", information)
     conn.commit()
     conn.close()
 
@@ -73,7 +76,7 @@ def search_row(id=""):
     if not id:
         id = "some words"
     try:
-        c.execute("SELECT rowid, * from database2 WHERE rowid=?", (id,))
+        c.execute("SELECT rowid, * from Mimisbrunnr_1 WHERE rowid=?", (id,))
     except Error as e:
         print(e)
     row = c.fetchone()
@@ -106,7 +109,7 @@ def search_rows(scale="", studio="", name="", type="", species="", value="", buy
         notes = "some words"
 
     try:
-        c.execute("""SELECT rowid, * FROM database2 WHERE 
+        c.execute("""SELECT rowid, * FROM Mimisbrunnr_1 WHERE 
                     Scale=? OR Studio=? OR Name=? OR
                     Type=? OR Species=? OR Value=? OR Buyer=? OR
                     Date=? OR Notes=?""",
@@ -129,7 +132,7 @@ def delete_row(id=""):
     c = conn.cursor()
     if not id:
         id = "some words"
-    c.execute("DELETE FROM database2 WHERE rowid=?", (id,))
+    c.execute("DELETE FROM Mimisbrunnr_1 WHERE rowid=?", (id,))
     conn.commit()
     conn.close()
 
@@ -137,7 +140,7 @@ def delete_row(id=""):
 def update_row(id="", scale="", studio="", name="", type="", species="", value="", buyer="", year="", notes=""):
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
-    c.execute("""UPDATE database2 SET Scale=?, Studio=?, Name=?, Type=?, Species=?, Value=?, Buyer=?, Date=?, Notes=? WHERE rowid=?""",
+    c.execute("""UPDATE Mimisbrunnr_1 SET Scale=?, Studio=?, Name=?, Type=?, Species=?, Value=?, Buyer=?, Date=?, Notes=? WHERE rowid=?""",
               (scale, studio, name, type, species, value, buyer, year, notes, int(id)))
     conn.commit()
     conn.close()
@@ -146,10 +149,10 @@ def update_row(id="", scale="", studio="", name="", type="", species="", value="
 def show_table():
     conn = sqlite3.connect(inventory_db)
     c = conn.cursor()
-    # if name == "database1":
-    c.execute("SELECT rowid, * FROM database2")
-    # elif name == "database2":
-    # c.execute("SELECT rowid, * FROM database2")
+    # if name == "Mimisbrunnr_1":
+    c.execute("SELECT rowid, * FROM Mimisbrunnr_1")
+    # elif name == "Mimisbrunnr_1":
+    # c.execute("SELECT rowid, * FROM Mimisbrunnr_1")
     rows = c.fetchall()
     # for row in rows:
     #     print(row)
@@ -161,7 +164,7 @@ def show_table():
 
 def to_csv():
     conn = sqlite3.connect(inventory_db, detect_types=sqlite3.PARSE_COLNAMES)
-    db_df = pd.read_sql_query("SELECT * FROM database2", conn)
+    db_df = pd.read_sql_query("SELECT * FROM Mimisbrunnr_1", conn)
     sorted_df = db_df.sort_values(by=["Studio"], ascending=True)
     sorted_df.to_csv(csv_name, index=False)
 
