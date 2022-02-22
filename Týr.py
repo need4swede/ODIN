@@ -10,7 +10,7 @@ import darkdetect
 import Mimisbrunnr.Mimisbrunnr_1 as Mimisbrunnr_1 
 import Mimisbrunnr.Mimisbrunnr_2 as Mimisbrunnr_2
 import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil
-from clear_term import clear_term
+from Tyr.clear_term import clear_term
 from PyQt6 import *
 from csv import reader
 from datetime import date
@@ -46,35 +46,35 @@ today = date_today.strftime("%B %d,  %Y")
 ## ICONS/IMAGES  ##############
 app_icons = True
 if app_icons:
-    png_lab = root_dir + "/Týr/Icons/lab.png"
-    png_add = root_dir + "/Týr/Icons/add.png"
-    png_delete = root_dir + "/Týr/Icons/delete.png"
-    png_search = root_dir + "/Týr/Icons/search.png"
-    png_run = root_dir + "/Týr/Icons/run.png"
-    png_info = root_dir + "/Týr/Icons/information.png"
-    png_view = root_dir + "/Týr/Icons/view.png"
-    png_export = root_dir + "/Týr/Icons/export.png"
-    png_clear = root_dir + "/Týr/Icons/clear.png"
-    png_refresh = root_dir + "/Týr/Icons/refresh.png"
-    png_update = root_dir + "/Týr/Icons/update.png"
-    png_move = root_dir + "/Týr/Icons/move.png"
-    png_logo = root_dir + "/Týr/Icons/tyr-icon.png"
-    png_db_primary = root_dir + "/Týr/Icons/tyr-icon.png"
+    png_lab = root_dir + "/Tyr/Icons/lab.png"
+    png_add = root_dir + "/Tyr/Icons/add.png"
+    png_delete = root_dir + "/Tyr/Icons/delete.png"
+    png_search = root_dir + "/Tyr/Icons/search.png"
+    png_run = root_dir + "/Tyr/Icons/run.png"
+    png_info = root_dir + "/Tyr/Icons/information.png"
+    png_view = root_dir + "/Tyr/Icons/view.png"
+    png_export = root_dir + "/Tyr/Icons/export.png"
+    png_clear = root_dir + "/Tyr/Icons/clear.png"
+    png_refresh = root_dir + "/Tyr/Icons/refresh.png"
+    png_update = root_dir + "/Tyr/Icons/update.png"
+    png_move = root_dir + "/Tyr/Icons/move.png"
+    png_logo = root_dir + "/Tyr/Icons/tyr-icon.png"
+    png_db_primary = root_dir + "/Tyr/Icons/tyr-icon.png"
 if darkdetect.isDark():
-    png_lab = root_dir + "/Týr/Icons/dark/lab.png"
-    png_add = root_dir + "/Týr/Icons/dark/add.png"
-    png_delete = root_dir + "/Týr/Icons/dark/delete.png"
-    png_search = root_dir + "/Týr/Icons/dark/search.png"
-    png_run = root_dir + "/Týr/Icons/dark/run.png"
-    png_info = root_dir + "/Týr/Icons/dark/information.png"
-    png_view = root_dir + "/Týr/Icons/dark/view.png"
-    png_export = root_dir + "/Týr/Icons/dark/export.png"
-    png_clear = root_dir + "/Týr/Icons/dark/clear.png"
-    png_refresh = root_dir + "/Týr/Icons/dark/refresh.png"
-    png_update = root_dir + "/Týr/Icons/dark/update.png"
-    png_move = root_dir + "/Týr/Icons/dark/move.png"
-    png_logo = root_dir + "/Týr/Icons/dark/tyr-icon.png"
-    png_db_primary = root_dir + "/Týr/Icons/dark/tyr-icon.png"
+    png_lab = root_dir + "/Tyr/Icons/dark/lab.png"
+    png_add = root_dir + "/Tyr/Icons/dark/add.png"
+    png_delete = root_dir + "/Tyr/Icons/dark/delete.png"
+    png_search = root_dir + "/Tyr/Icons/dark/search.png"
+    png_run = root_dir + "/Tyr/Icons/dark/run.png"
+    png_info = root_dir + "/Tyr/Icons/dark/information.png"
+    png_view = root_dir + "/Tyr/Icons/dark/view.png"
+    png_export = root_dir + "/Tyr/Icons/dark/export.png"
+    png_clear = root_dir + "/Tyr/Icons/dark/clear.png"
+    png_refresh = root_dir + "/Tyr/Icons/dark/refresh.png"
+    png_update = root_dir + "/Tyr/Icons/dark/update.png"
+    png_move = root_dir + "/Tyr/Icons/dark/move.png"
+    png_logo = root_dir + "/Tyr/Icons/dark/tyr-icon.png"
+    png_db_primary = root_dir + "/Tyr/Icons/dark/tyr-icon.png"
 ## INPUT LABELS ###################################################
 ## MAIN LABELS  ###############
 main_labels = True
@@ -1620,14 +1620,14 @@ class mainWin(QMainWindow):
         
     #     ### open button
     #     open_icon = self.style().standardIcon(QStyle.SP_DialogOpenButton)
-    #     open_btn = QToolButton(text = "Open", Týr/Icons = open_icon)
+    #     open_btn = QToolButton(text = "Open", Tyr/Icons = open_icon)
     #     open_btn.clicked.connect(self.open_file)
     #     open_btn.setStyleSheet("QToolButton:hover {background: #a5dcff;}")
     #     self.toolbar.addWidget(open_btn)
         
     #     ### open button
     #     save_icon = self.style().standardIcon(QStyle.SP_DialogSaveButton)
-    #     save_btn = QToolButton(text = "Save", Týr/Icons = save_icon)
+    #     save_btn = QToolButton(text = "Save", Tyr/Icons = save_icon)
     #     save_btn.clicked.connect(self.save_file)
     #     save_btn.setStyleSheet("QToolButton:hover {background: #a5dcff;}")
     #     self.toolbar.addWidget(save_btn) 
