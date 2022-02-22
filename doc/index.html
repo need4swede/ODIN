@@ -150,16 +150,26 @@
 			<section class="functions functions-mimir">
 				<span class="anchor" id="jump-mimir"></span>
 				<h3><span class="color-mimir">Mimir</span></h3>
-				<i class="fa-solid fa-turn-down arrow-h4"></i>
-				<h4><span class="color-lightgreen">'Help'</span> Function:</h4>
-				<i class="fa-solid fa-turn-down arrow-p"></i>
-				<p><strong><span class="color-lightgreen">help</span></strong>&mdash; Lists available help options</p>
-				<p><strong><span class="color-lightgreen">help:</span>howto</strong>&mdash; Loads this document</p>
-				<p><strong><span class="color-lightgreen">help:</span>shortcuts</strong>&mdash; Lists available keyboard shortcuts</p>
-				<p><strong><span class="color-lightgreen">help:</span>tags</strong>&mdash; Lists available run arguments</p>
-				<aside class="notes"><span class="background-notes"><i class="fa-solid fa-terminal"></i> <span class="color-lightgreen">help</span>:<span class="color-dark-orange">command</span>
-					<br><span class="color-mimir">Mimir's</span> <span class="color-lightgreen">help</span> function is also natively built into 
-					the error handling, and will display appropriate options based on the error</span></aside>
+					<i class="fa-solid fa-turn-down arrow-h4"></i>
+					<h4><span class="color-lightgreen">'Help'</span> Function:</h4>
+						<i class="fa-solid fa-turn-down arrow-p"></i>
+						<p><strong><span class="color-lightgreen">help</span></strong>&mdash; Lists available help options</p>
+						<p><strong><span class="color-lightgreen">help:</span>readme</strong>&mdash; Read ODIN's documentation</p>
+						<p><strong><span class="color-lightgreen">help:</span>shortcuts</strong>&mdash; Lists available keyboard shortcuts</p>
+						<p><strong><span class="color-lightgreen">help:</span>tags</strong>&mdash; Lists available run arguments</p>
+						<aside class="notes"><span class="background-notes"><i class="fa-solid fa-terminal"></i> <span class="color-lightgreen">help</span>:<span class="color-dark-orange">command</span>
+							<br><span class="color-mimir">Mimir's</span> <span class="color-lightgreen">help</span> function is also natively built into 
+							the error handling, and will display appropriate options based on the error</span></aside>
+					<i class="fa-solid fa-turn-down arrow-h4"></i>
+					<h4><span class="color-lightgreen">'AT'</span> Function:</h4>	
+						<i class="fa-solid fa-turn-down arrow-p"></i>
+						<p><strong><span class="color-lightgreen">at:</span>{assettag}</strong>&mdash; Searches for an asset tag</p>
+						<aside class="notes"><span class="background-notes"><i class="fa-solid fa-terminal"></i> <span class="color-lightgreen">at</span>:<span class="color-dark-orange">115784</span>
+						<br>When you run this command, <span class="color-mimir">Mimir</span> will fetch the matching asset tag and pass it to <span class="color-tyr">Tyr</span>
+						<br><span class="color-mimir">Mimir</span> also searches substrings and will fetch the first match in the database that matches the entered characters. 
+						<br>This is useful for cases where teams use different tags depending on who is in possession of the asset, so you can quickly find
+						<br>the asset belonging to a person without having to remember the unique characters.
+						<br>If it finds an exact match for the tag, <span class="color-mimir">Mimir</span> will fetch that instead.</span></aside>
 			</section>
 			<section class="functions functions-heimdall">
 				<span class="anchor" id="jump-heimdall"></span>
