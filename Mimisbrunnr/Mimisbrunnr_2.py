@@ -12,7 +12,7 @@ import pandas as pd
 ## DIRECTORY ######################################################
 root_dir = os.path.dirname(os.path.abspath(__file__))
 path_parent = os.path.dirname(os.getcwd())
-mimir_dir = (path_parent + "/Mimir")
+mimir_dir = (path_parent + "/ODIN/Mimir")
 if not os.path.isdir(mimir_dir):
     os.makedirs(mimir_dir)
 inventory_db = mimir_dir + "/Mimir.db"
