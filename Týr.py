@@ -20,7 +20,7 @@ from PyQt6.QtCore import *
 ## USER DIRECTORY IMPORTS #########################################
 global root_dir
 root_dir = os.path.dirname(os.path.abspath(__file__))                        
-with open(root_dir + "/users.csv", 'r') as read_obj:
+with open(root_dir + "/Tyr/users.csv", 'r') as read_obj:
     csv_reader = reader(read_obj)
     ad_users = list(csv_reader)
     length = len(ad_users)
