@@ -1,5 +1,5 @@
 # #################################################################
-# File name:    ODIN.py
+# File name:    Týr.py
 # Author:       Need4Swede
 # Create on:    10-15-2021
 # Description:  Omniscient Database for Inventory Notation
