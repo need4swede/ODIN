@@ -7,10 +7,7 @@
 
 ## LIBRARY IMPORTS ################################################
 import darkdetect
-import Mimisbrunnr.Mimisbrunnr_1 as Mimisbrunnr_1 
-import Mimisbrunnr.Mimisbrunnr_2 as Mimisbrunnr_2
 import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil
-from Tyr.clear_term import clear_term
 from PyQt6 import *
 from csv import reader
 from datetime import date
@@ -19,7 +16,13 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 ## USER DIRECTORY IMPORTS #########################################
 global root_dir
-root_dir = os.path.dirname(os.path.abspath(__file__))                        
+root_dir = os.path.dirname(os.path.abspath(__file__))
+path_parent = os.path.dirname(os.getcwd())
+root_dir = path_parent + "/ODIN"
+sys.path.append('../ODIN')
+import Mimisbrunnr.Mimisbrunnr_1 as Mimisbrunnr_1 
+import Mimisbrunnr.Mimisbrunnr_2 as Mimisbrunnr_2
+from Tyr.clear_term import clear_term                        
 with open(root_dir + "/Tyr/users.csv", 'r') as read_obj:
     csv_reader = reader(read_obj)
     ad_users = list(csv_reader)
