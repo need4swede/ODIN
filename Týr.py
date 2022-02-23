@@ -28,11 +28,12 @@ with open(root_dir + "/users.csv", 'r') as read_obj:
     for x in range(length):
         user_list = user_list + ad_users[x]
 ###################################################################
-## DIRECTORY ######################################################
+## DIRECTORIES ####################################################
 global inventory_db
+documentation_dir = (root_dir + "/Documentation")
 mimir_dir = (root_dir + "/Mimir")
 mimisbrunnr_dir = (root_dir + "/Mimisbrunnr")
-documentation_dir = (root_dir + "/Documentation")
+tyr_dir = (root_dir + "/Tyr")
 if not os.path.isdir(mimir_dir):
     os.makedirs(mimir_dir)
 if os.path.isdir(documentation_dir):
@@ -43,6 +44,12 @@ if os.path.isdir(documentation_dir):
 inventory_db = mimir_dir + "/Mimir.db"
 date_today = date.today()
 today = date_today.strftime("%B %d,  %Y")
+clean_dir = True
+if clean_dir:
+    if os.path.isdir(root_dir + "/__pycache__"):
+        shutil.rmtree(root_dir + "/__pycache__")
+    shutil.rmtree(mimisbrunnr_dir + "/__pycache__")
+    shutil.rmtree(tyr_dir + "/__pycache__")
 ## ICONS/IMAGES  ##############
 app_icons = True
 if app_icons:
