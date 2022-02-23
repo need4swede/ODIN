@@ -801,9 +801,9 @@ class MainWindow(QMainWindow):
                 elif help_requested[1] == "README":
                     online_readme = True
                     if(online_readme):
-                        readme = ("https://need4swede.github.io/ODIN/Documentation/readme.html")
+                        readme = ("https://need4swede.github.io/ODIN/Mimir/Documentation/readme.html")
                     else:
-                        readme = (root_dir + "/Documentation/readme.html")
+                        readme = (root_dir + "/Mimir/Documentation/readme.html")
                         if platform.system() == "Darwin":
                             print("isMac")
                             readme = ("file:///" + readme)
