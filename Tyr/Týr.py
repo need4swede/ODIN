@@ -1,7 +1,6 @@
 # #################################################################
 # File name:    Týr.py
 # Author:       Need4Swede
-# Create on:    02-14-2021
 # Description:  Omniscient Database for Inventory Notation
 # #################################################################
 
