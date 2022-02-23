@@ -161,7 +161,7 @@ if app_info:
     app_description = "ODIN's Adaptive Asset Management System"
     app_framework = "Python 3.9 / PyQt6 / SQLite3"
     app_contact = "Contact: Need4Swede | theneed4swede@gmail.com"
-## MimisbrunnrS ######################################################
+## MIMISBRUNNR LIST ###############################################
 app_Mimisbrunnr = True
 if app_Mimisbrunnr:
     db_primary = "Mimisbrunnr 1"
@@ -170,7 +170,7 @@ if app_Mimisbrunnr:
 ###################################################################
 ## CLEAR TERMINAL
 clear_term()
-## ODIN ###########################################################
+## TYR MAIN #######################################################
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
@@ -1141,7 +1141,7 @@ class MainWindow(QMainWindow):
             sys.exit()
         else:
             pass
-## ABOUT APP ######################################################
+## TYR INFO #######################################################
 class AboutDialog(QDialog):
     def __init__(self, *args, **kwargs):
         super(AboutDialog, self).__init__(*args, **kwargs)
@@ -1178,7 +1178,7 @@ class AboutDialog(QDialog):
         layout.addWidget(self.buttonBox)
 
         self.setLayout(layout)
-## TYR ############################################################
+## TYR INITIALIZE #################################################
 class EntryWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -1614,35 +1614,7 @@ class mainWin(QMainWindow):
         # self.create_toolbar()
         self.csv_file = ""
         self.csv_file_name = ""
-        
-    # def create_toolbar(self):
-    #     ### create toolbar
-    #     self.toolbar = self.addToolBar("File")
-    #     self.toolbar.setContextMenuPolicy(Qt.ContextMenuPolicy)
-    #     self.toolbar.setMovable(False)
-    #     self.toolbar.setAllowedAreas(Qt.TopToolBarArea)
-    #     self.toolbar.setIconSize(QSize(16, 16))
-    #     self.toolbar.setStyleSheet("border: 0px; padding: 3px;")
-    #     self.setWindowIcon(self.style().standardIcon(QStyle.SP_FileDialogListView))
-        
-    #     ### open button
-    #     open_icon = self.style().standardIcon(QStyle.SP_DialogOpenButton)
-    #     open_btn = QToolButton(text = "Open", Tyr/Icons = open_icon)
-    #     open_btn.clicked.connect(self.open_file)
-    #     open_btn.setStyleSheet("QToolButton:hover {background: #a5dcff;}")
-    #     self.toolbar.addWidget(open_btn)
-        
-    #     ### open button
-    #     save_icon = self.style().standardIcon(QStyle.SP_DialogSaveButton)
-    #     save_btn = QToolButton(text = "Save", Tyr/Icons = save_icon)
-    #     save_btn.clicked.connect(self.save_file)
-    #     save_btn.setStyleSheet("QToolButton:hover {background: #a5dcff;}")
-    #     self.toolbar.addWidget(save_btn) 
- 
-    #     self.statusbar = self.statusBar()
-    #     self.statusbar.setStyleSheet("font-size: 8pt; color: #888a85")
-    #     self.statusbar.showMessage("Ready")
-        
+             
     def open_file(self):
         fname,_ = QFileDialog.getOpenFileName(self, 'Open file', '', 
                                               "CSV Files (*.csv *.tsv *.txt);;All Files (*.*)")
@@ -1650,8 +1622,7 @@ class mainWin(QMainWindow):
             self.csv_file = fname
             self.load_csv(self.csv_file)
             self.statusbar.showMessage(f"{fname} loaded")
-            # ERROR MESSAGE
-
+            
     def save_file(self):
         if self.lb.rowCount() < 1:
             return
@@ -1701,7 +1672,7 @@ class mainWin(QMainWindow):
                 self.lb.setItem(row, column, celltext)
                 column += 1
             row += 1
-## Mimisbrunnr #######################################################
+## MIMISBRUNNR ####################################################
 if __name__ == "__main__":
     mimir_exists = os.path.isfile(inventory_db)
 
