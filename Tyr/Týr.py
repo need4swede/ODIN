@@ -16,38 +16,42 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 ## USER DIRECTORY IMPORTS #########################################
 global root_dir
-root_dir = os.path.dirname(os.path.abspath(__file__))
-path_parent = os.path.dirname(os.getcwd())
-root_dir = path_parent + "/ODIN"
-sys.path.append('../ODIN')
-import Mimisbrunnr.Mimisbrunnr_1 as Mimisbrunnr_1 
-import Mimisbrunnr.Mimisbrunnr_2 as Mimisbrunnr_2
-from Tyr.clear_term import clear_term                        
-with open(root_dir + "/Tyr/users.csv", 'r') as read_obj:
-    csv_reader = reader(read_obj)
-    ad_users = list(csv_reader)
-    length = len(ad_users)
-    user_list = ["Assign To...", "To Realm"]
-    for x in range(length):
-        user_list = user_list + ad_users[x]
+app_modules = True
+if app_modules:
+    root_dir = os.path.dirname(os.path.abspath(__file__))
+    path_parent = os.path.dirname(os.getcwd())
+    root_dir = path_parent + "/ODIN"
+    sys.path.append('../ODIN')
+    import Mimisbrunnr.Mimisbrunnr_1 as Mimisbrunnr_1 
+    import Mimisbrunnr.Mimisbrunnr_2 as Mimisbrunnr_2
+    from Tyr.clear_term import clear_term                        
+    with open(root_dir + "/Tyr/users.csv", 'r') as read_obj:
+        csv_reader = reader(read_obj)
+        ad_users = list(csv_reader)
+        length = len(ad_users)
+        user_list = ["Assign To...", "To Realm"]
+        for x in range(length):
+            user_list = user_list + ad_users[x]
 ###################################################################
 ## DIRECTORIES ####################################################
 global inventory_db
-documentation_dir = (root_dir + "/Documentation")
-mimir_dir = (root_dir + "/Mimir")
-mimisbrunnr_dir = (root_dir + "/Mimisbrunnr")
-tyr_dir = (root_dir + "/Tyr")
-if not os.path.isdir(mimir_dir):
-    os.makedirs(mimir_dir)
-if os.path.isdir(documentation_dir):
-    if os.path.isdir(mimir_dir + "/Documentation"):
-        shutil.rmtree(mimir_dir + "/Documentation")
-    shutil.copytree(documentation_dir, mimir_dir + "/Documentation")
-    shutil.rmtree(documentation_dir) 
-inventory_db = mimir_dir + "/Mimir.db"
-date_today = date.today()
-today = date_today.strftime("%B %d,  %Y")
-clean_dir = True
+app_dir = True
+if app_dir:
+    documentation_dir = (root_dir + "/Documentation")
+    mimir_dir = (root_dir + "/Mimir")
+    mimisbrunnr_dir = (root_dir + "/Mimisbrunnr")
+    tyr_dir = (root_dir + "/Tyr")
+    if not os.path.isdir(mimir_dir):
+        os.makedirs(mimir_dir)
+    if os.path.isdir(documentation_dir):
+        if os.path.isdir(mimir_dir + "/Documentation"):
+            shutil.rmtree(mimir_dir + "/Documentation")
+        shutil.copytree(documentation_dir, mimir_dir + "/Documentation")
+        shutil.rmtree(documentation_dir) 
+    inventory_db = mimir_dir + "/Mimir.db"
+    date_today = date.today()
+    today = date_today.strftime("%B %d,  %Y")
+    clean_dir = True
 if clean_dir:
     if os.path.isdir(root_dir + "/__pycache__"):
         shutil.rmtree(root_dir + "/__pycache__")
@@ -127,17 +131,14 @@ if drop_labels:
     lb_locations_vanir = ["Choose a Realm"]
     lb_locations_aesir = ["Choose a Realm"]
     alpha = string.ascii_uppercase
-
 def list_vanir_locations():
     for x in range(1,25):
         lb_locations_vanir.append("Realm " + str(x))
-
 def list_aesir_locations():
     lb_locations_aesir.append("Asgard") 
     lb_locations_aesir.append("-----------")
     for x in range(0, 26):
-        lb_locations_aesir.append("Realm " + alpha[x])
-    
+        lb_locations_aesir.append("Realm " + alpha[x])   
 list_aesir_locations()
 list_vanir_locations()
 ###############################
@@ -169,7 +170,6 @@ if app_Mimisbrunnr:
 ###################################################################
 ## CLEAR TERMINAL
 clear_term()
-
 ## ODIN ###########################################################
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
@@ -1141,7 +1141,6 @@ class MainWindow(QMainWindow):
             sys.exit()
         else:
             pass
-
 ## ABOUT APP ######################################################
 class AboutDialog(QDialog):
     def __init__(self, *args, **kwargs):
@@ -1179,7 +1178,6 @@ class AboutDialog(QDialog):
         layout.addWidget(self.buttonBox)
 
         self.setLayout(layout)
-
 ## TYR ############################################################
 class EntryWindow(QWidget):
     def __init__(self):
@@ -1602,7 +1600,6 @@ class EntryWindow(QWidget):
         self.stackedLayout.setCurrentIndex(self.pageCombo.currentIndex())
         self.db_id = self.pageCombo.currentIndex()
         return self.db_id
-
 ## MIMIR ##########################################################
 class mainWin(QMainWindow):
     def __init__(self, parent = None):
@@ -1704,7 +1701,6 @@ class mainWin(QMainWindow):
                 self.lb.setItem(row, column, celltext)
                 column += 1
             row += 1
-
 ## Mimisbrunnr #######################################################
 if __name__ == "__main__":
     mimir_exists = os.path.isfile(inventory_db)
