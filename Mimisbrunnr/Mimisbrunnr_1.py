@@ -1,9 +1,8 @@
-# ##################################################################
+# #################################################################
 # File name:    Mimisbrunnr_1.py
 # Author:       Need4Swede
-# Create on:    2021-11-20
-# Description:  Backend module for managing the Mimisbrunnr_1 Database
-# ##################################################################
+# Description:  Mimir's Database File for ODIN
+# #################################################################
 import sqlite3, os, sys
 from sqlite3 import Error
 from sqlite3.dbapi2 import Date

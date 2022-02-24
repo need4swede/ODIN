@@ -1,11 +1,8 @@
-# ##################################################################
+# #################################################################
 # File name:    Mimisbrunnr_2.py
-# Author:       Zhangshun Lu
-# Create on:    2021-04-20
-# Description:  Backend module for managing the Mimisbrunnr_1 Mimisbrunnr
-# ##################################################################
-
-
+# Author:       Need4Swede
+# Description:  Mimir's Database File for ODIN
+# #################################################################
 import sqlite3, os
 from sqlite3 import Error
 import pandas as pd
