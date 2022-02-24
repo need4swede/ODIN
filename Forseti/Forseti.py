@@ -1002,7 +1002,7 @@ class EntryWindow(QWidget):
             if reply == QMessageBox.StandardButton.Yes:
                 with open('Tyr/Týr.py', 'r') as file:
                     data = file.readlines()
-                    data[97] = f'    lb_id = "ID #:"\n'
+                    data[97] = f'    lb_id = "ID #"\n'
                     data[98] = f'    lb_site = "Site:"\n'
                     data[99] = f'    lb_location = "Location:"\n'
                     data[100] = f'    lb_product = "Selection:"\n'
@@ -1013,11 +1013,11 @@ class EntryWindow(QWidget):
                     data[105] = f'    lb_status = "Status:"\n'
                     data[106] = f'    lb_date = "Date:"\n'
                     data[107] = f'    lb_info = "Info:"\n'
-                    data[108] = f'    lb_deployed = "Deployed:"\n'
-                    data[109] = f'    lb_instock = "In Stock:"\n'
-                    data[110] = f'    lb_onorder = "On Order:"\n'
-                    data[111] = f'    lb_oos_repair = "Out of Service - Needs Repair:"\n'
-                    data[112] = f'    lb_oos_obsolete = "Out of Service - Obsolete:"\n'         
+                    data[108] = f'    lb_deployed = "Deployed"\n'
+                    data[109] = f'    lb_instock = "In Stock"\n'
+                    data[110] = f'    lb_onorder = "On Order"\n'
+                    data[111] = f'    lb_oos_repair = "Out of Service - Needs Repair"\n'
+                    data[112] = f'    lb_oos_obsolete = "Out of Service - Obsolete"\n'         
                 with open('Tyr/Týr.py', 'w') as file:
                     file.writelines(data)
                 reply = QMessageBox.question(self, 'Reset', "Týr's values have been reset",
