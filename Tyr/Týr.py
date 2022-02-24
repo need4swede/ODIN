@@ -158,7 +158,7 @@ if drop_sub_labels:
 app_info = True
 if app_info:
     app_title = "Týr"
-    app_version = "Build: 2.2"
+    app_version = "(Build: 2.2)"
     info_title = "About"
     app_description = "ODIN's Adaptive Asset Management System"
     app_framework = "Python 3.9 / PyQt6 / SQLite3"
@@ -1281,7 +1281,7 @@ class EntryWindow(QWidget):
         self.form_layout_db1 = QFormLayout()
 
         self.item_db1_id = ""
-        self.item_db1_id_label = QLabel(f"Týr - ({app_version})" + self.item_db1_id)
+        self.item_db1_id_label = QLabel(f"Týr - {app_version}" + self.item_db1_id)
         self.page_db1_layout.addWidget(self.item_label_db1)
         self.page_db1_layout.addWidget(self.item_db1_id_label)
         
