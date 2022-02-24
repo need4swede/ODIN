@@ -172,7 +172,13 @@ def to_csv():
     sorted_df = db_df.sort_values(by=["Product"], ascending=True)
     if not os.path.isdir(export_dir):
         os.makedirs(export_dir)
-    sorted_df.to_csv(export_dir + csv_name, index=False)
+    if not os.path.isdir(export_dir + "/CSV"):
+        os.makedirs(export_dir + "/CSV")
+    if not os.path.isdir(export_dir + "/HTML"):
+        os.makedirs(export_dir + "/HTML")
+    if not os.path.isdir(export_dir + "/PDF"):
+        os.makedirs(export_dir + "/PDF")
+    sorted_df.to_csv(export_dir + "/CSV/" + csv_name, index=False)
 
 
 def main():
@@ -181,3 +187,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+to_csv()

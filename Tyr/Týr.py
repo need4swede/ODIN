@@ -6,7 +6,9 @@
 
 ## LIBRARY IMPORTS ################################################
 import darkdetect
-import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil
+import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil, csv
+import pandas as pd
+from fpdf import FPDF
 from PyQt6 import *
 from csv import reader
 from datetime import date
@@ -39,6 +41,7 @@ if app_dir:
     documentation_dir = (root_dir + "/Documentation")
     mimir_dir = (root_dir + "/Mimir")
     mimisbrunnr_dir = (root_dir + "/Mimisbrunnr")
+    mimisbrunnr_export_dir = (mimisbrunnr_dir + "/exports/")
     tyr_dir = (root_dir + "/Tyr")
     if not os.path.isdir(mimir_dir):
         os.makedirs(mimir_dir)
@@ -116,7 +119,7 @@ if drop_labels:
     lb_ap = "Access Point"
     lb_colors = "Black", "Blue", "Brown", "Green", "Grey", "Yellow", "White"
     lb_desktop = "Desktop - Windows"
-    lb_dvr = "Digital Video Recorder"
+    lb_dvr = "DVR"
     lb_chromebooks = "Laptop - Chromebook"
     lb_winlaptops = "Laptop - Windows"
     lb_locprinters = "Printer - Local"
@@ -155,7 +158,7 @@ if drop_sub_labels:
 app_info = True
 if app_info:
     app_title = "Týr"
-    app_version = "Version: 2.0"
+    app_version = "Build: 2.2"
     info_title = "About"
     app_description = "ODIN's Adaptive Asset Management System"
     app_framework = "Python 3.9 / PyQt6 / SQLite3"
@@ -602,7 +605,7 @@ class MainWindow(QMainWindow):
             if self.key == db_primary:
                 first_matched_item = Mimisbrunnr_1.search_row(id)
                 self.item_info_window.item_db1_id_label.setText(
-                    "Item id:{:>35}".format(id))
+                    "ID #:{:>35}".format(id))
                 self.item_info_window.site_db1.clear()
                 self.item_info_window.site_db1.addItem(
                     str(first_matched_item[1]))
@@ -637,7 +640,7 @@ class MainWindow(QMainWindow):
             elif self.key == db_secondary:
                 first_matched_item = Mimisbrunnr_2.search_row(id)
                 self.item_info_window.item_db2_id_label.setText(
-                    "Item id:{:>35}".format(id))
+                    "ID #:{:>35}".format(id))
                 self.item_info_window.location_db2.setText(
                     str(first_matched_item[1]))
                 self.item_info_window.description_db2.setText(
@@ -663,9 +666,9 @@ class MainWindow(QMainWindow):
             print(str(first_matched_item[5]))
         except Exception:
             if self.key == db_primary:
-                self.item_info_window.item_db1_id_label.setText("Item id:")
+                self.item_info_window.item_db1_id_label.setText("ID #:")
             elif self.key == db_secondary:
-                self.item_info_window.item_db2_id_label.setText("Item id:")
+                self.item_info_window.item_db2_id_label.setText("ID #:")
             QMessageBox.information(
                 QMessageBox(), "Search", "Can not find the item")
 
@@ -706,7 +709,7 @@ class MainWindow(QMainWindow):
                                 while run_search:
                                     first_matched_item = Mimisbrunnr_1.search_row(row_count)
                                     self.item_info_window.item_db1_id_label.setText(
-                                        "Item id:{:>35}".format(row_count))
+                                        "ID #:{:>35}".format(row_count))
                                     self.item_info_window.site_db1.clear()
                                     self.item_info_window.site_db1.addItem(
                                         str(first_matched_item[1]))
@@ -1120,13 +1123,57 @@ class MainWindow(QMainWindow):
         self.load_data()
 
     def export(self):
+        export_dir = True
+        if export_dir:
+            mimisbrunnr_export_csv_1 = (mimisbrunnr_export_dir + "CSV/" + "Mimisbrunnr_1.csv")
+            mimisbrunnr_export_html_1 = (mimisbrunnr_export_dir + "HTML/" + "Mimisbrunnr_1.html")
+            mimisbrunnr_export_pdf_1 = (mimisbrunnr_export_dir + "PDF/" + "Mimisbrunnr_1.pdf")
+            mimisbrunnr_export_csv_2 = (mimisbrunnr_export_dir + "CSV/Mimisbrunnr_2.csv")
         try:
             if self.key == db_primary:
                 Mimisbrunnr_1.to_csv()
+                loaded_export = pd.read_csv(mimisbrunnr_export_csv_1)
+                loaded_export.to_html(mimisbrunnr_export_html_1)
+                with open(mimisbrunnr_export_csv_1, newline='') as f:
+                    reader = csv.reader(f)
+                    pdf = FPDF()
+                    pdf.add_page(orientation = 'L')
+                    page_width = pdf.w - 8 * pdf.l_margin
+                    pdf.set_font('Times','B',14.0) 
+                    pdf.cell(page_width, 0.0, 'Mimisbrunnr Export')
+                    pdf.ln(6)
+                    pdf.set_font('Times','',10.0)
+                    pdf.cell(page_width, 0.0, f'Date: {date_today}')
+                    pdf.ln(10)                  
+                    pdf.set_font('Courier', '', 6.5)
+                    col_width = page_width/6.4
+                    pdf.ln(1)
+                    th = pdf.font_size * 2
+                    bold = True
+                    for row in reader:
+                        if bold:
+                            pdf.set_font('Helvetica', 'B', 9.5)
+                            bold = not bold
+                        else:
+                            pdf.set_font('Times', '', 8.5)
+                        pdf.cell(col_width, th, str(row[0]), border=1, align='C')
+                        pdf.cell(col_width, th, row[1], border=1, align='C')
+                        pdf.cell(col_width, th, row[2], border=1, align='C')
+                        pdf.cell(col_width, th, row[3], border=1, align='C')
+                        pdf.cell(col_width, th, row[4], border=1, align='C')
+                        pdf.cell(col_width, th, row[5], border=1, align='C')
+                        pdf.cell(col_width, th, row[6], border=1, align='C')
+                        pdf.cell(col_width, th, row[9], border=1, align='C')
+                        pdf.ln(th)
+                    pdf.ln(10)
+                    pdf.set_font('Times','',10.0)
+                    pdf.cell(page_width, 0.0, '- end of report -')
+
+                    pdf.output(mimisbrunnr_export_pdf_1, 'F')
             elif self.key == db_secondary:
                 Mimisbrunnr_2.to_csv()
             QMessageBox.information(
-                QMessageBox(), "File export", "Export to CSV successfully")
+                QMessageBox(), "File export", "Mimir: Exporting...\n\nCSV: Done\n\nHTML: Done\n\nPDF: Done\n\nMimir: Export Complete!")
         except Exception:
             QMessageBox.warning(QMessageBox(), "Error",
                                 "Could not export to csv")
@@ -1190,12 +1237,15 @@ class EntryWindow(QWidget):
         self.Mimisbrunnr_label = QLabel("Mimisbrunnr")
         self.Mimisbrunnr_label.setFont(QFont("Arial", 14))
         self.Mimisbrunnr_label.setFixedSize(100, 30)
+        self.Mimisbrunnr_label.hide()
         self.item_label_db1 = QLabel("Item Information")
         self.item_label_db1.setFont(QFont("Arial", 14))
         self.item_label_db1.setFixedSize(250, 40)
+        self.item_label_db1.hide()
         self.item_label_db2 = QLabel("Item Information")
         self.item_label_db2.setFont(QFont("Arial", 14))
         self.item_label_db2.setFixedSize(250, 40)
+        self.item_label_db2.hide()
 
         self.picLabel = QLabel()
         self.pixmap = QPixmap(png_db_primary)
@@ -1212,6 +1262,7 @@ class EntryWindow(QWidget):
         self.pageCombo = QComboBox()
         self.pageCombo.addItems(
             [db_primary, db_secondary, db_tertiary])
+        self.pageCombo.hide()
         self.pageCombo.activated.connect(self.switchPage)
 
         # Layouts
@@ -1230,7 +1281,7 @@ class EntryWindow(QWidget):
         self.form_layout_db1 = QFormLayout()
 
         self.item_db1_id = ""
-        self.item_db1_id_label = QLabel(lb_id + self.item_db1_id)
+        self.item_db1_id_label = QLabel(f"Týr - ({app_version})" + self.item_db1_id)
         self.page_db1_layout.addWidget(self.item_label_db1)
         self.page_db1_layout.addWidget(self.item_db1_id_label)
         
@@ -1478,6 +1529,7 @@ class EntryWindow(QWidget):
     # Inserts the information from the previous window, into our main window
     def find(self):
         # finding the content of current item in combo box
+        
         btn_add.show()
         search_bar.show()
         btn_search.show()
@@ -1599,7 +1651,7 @@ class EntryWindow(QWidget):
         self.stackedLayout.setCurrentIndex(self.pageCombo.currentIndex())
         self.db_id = self.pageCombo.currentIndex()
         return self.db_id
-## MIMIR ##########################################################
+## MIMIR IMPORT ###################################################
 class mainWin(QMainWindow):
     def __init__(self, parent = None):
         super(mainWin, self).__init__(parent)
