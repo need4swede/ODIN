@@ -431,6 +431,8 @@ class MainWindow(QMainWindow):
         self.shortcut_refresh.activated.connect(btn_clear.click)
         self.shortcut_clear = QShortcut(QKeySequence('Alt+c'), self)
         self.shortcut_clear.activated.connect(btn_clear_2.click)
+        self.shortcut_csv2pdf = QShortcut(QKeySequence('Alt+p'), self)
+        self.shortcut_csv2pdf.activated.connect(self.update_pdf)
         ## SEE 1293 FOR SEARCH SHORTCUT
         
 
@@ -1174,6 +1176,63 @@ class MainWindow(QMainWindow):
                 Mimisbrunnr_2.to_csv()
             QMessageBox.information(
                 QMessageBox(), "File export", "Mimir: Exporting...\n\nCSV: Done\n\nHTML: Done\n\nPDF: Done\n\nMimir: Export Complete!")
+        except Exception:
+            QMessageBox.warning(QMessageBox(), "Error",
+                                "Could not export to csv")
+        finally:
+            pass
+
+    def update_pdf(self):
+        export_dir = True
+        if export_dir:
+            mimisbrunnr_export_csv_1 = (mimisbrunnr_export_dir + "CSV/" + "Mimisbrunnr_1.csv")
+            mimisbrunnr_export_html_1 = (mimisbrunnr_export_dir + "HTML/" + "Mimisbrunnr_1.html")
+            mimisbrunnr_export_pdf_1 = (mimisbrunnr_export_dir + "PDF/" + "Mimisbrunnr_1.pdf")
+            mimisbrunnr_export_csv_2 = (mimisbrunnr_export_dir + "CSV/Mimisbrunnr_2.csv")
+        try:
+            if self.key == db_primary:
+                loaded_export = pd.read_csv(mimisbrunnr_export_csv_1)
+                loaded_export.to_html(mimisbrunnr_export_html_1)
+                with open(mimisbrunnr_export_csv_1, newline='') as f:
+                    reader = csv.reader(f)
+                    pdf = FPDF()
+                    pdf.add_page(orientation = 'L')
+                    page_width = pdf.w - 8 * pdf.l_margin
+                    pdf.set_font('Times','B',14.0) 
+                    pdf.cell(page_width, 0.0, 'Mimisbrunnr Export')
+                    pdf.ln(6)
+                    pdf.set_font('Times','',10.0)
+                    pdf.cell(page_width, 0.0, f'Date: {date_today}')
+                    pdf.ln(10)                  
+                    pdf.set_font('Courier', '', 6.5)
+                    col_width = page_width/6.4
+                    pdf.ln(1)
+                    th = pdf.font_size * 2
+                    bold = True
+                    for row in reader:
+                        if bold:
+                            pdf.set_font('Helvetica', 'B', 9.5)
+                            bold = not bold
+                        else:
+                            pdf.set_font('Times', '', 8.5)
+                        pdf.cell(col_width, th, str(row[0]), border=1, align='C')
+                        pdf.cell(col_width, th, row[1], border=1, align='C')
+                        pdf.cell(col_width, th, row[2], border=1, align='C')
+                        pdf.cell(col_width, th, row[3], border=1, align='C')
+                        pdf.cell(col_width, th, row[4], border=1, align='C')
+                        pdf.cell(col_width, th, row[5], border=1, align='C')
+                        pdf.cell(col_width, th, row[6], border=1, align='C')
+                        pdf.cell(col_width, th, row[9], border=1, align='C')
+                        pdf.ln(th)
+                    pdf.ln(10)
+                    pdf.set_font('Times','',10.0)
+                    pdf.cell(page_width, 0.0, '- end of report -')
+
+                    pdf.output(mimisbrunnr_export_pdf_1, 'F')
+            elif self.key == db_secondary:
+                Mimisbrunnr_2.to_csv()
+            QMessageBox.information(
+                QMessageBox(), "File export", "Mimir: Exporting...\n\nHTML: Done\n\nPDF: Done\n\nMimir: Export Complete!")
         except Exception:
             QMessageBox.warning(QMessageBox(), "Error",
                                 "Could not export to csv")
