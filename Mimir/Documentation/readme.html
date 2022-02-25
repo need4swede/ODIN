@@ -46,9 +46,8 @@
 				entries with ease. Future versions of ODIN will include nodes that
 				have network features built in &mdash; but for now, the data is saved locally and will have to be synced manually.
 			</p>
-			<p class="description">ODIN is made up of different components &mdash; <strong><span class="color-tyr">Týr</span></strong>, <strong><span class="color-mimir">Mimir</span></strong> and <strong><span class="color-heimdall">Heimdall.</span></strong> Each component serves a different purpose, but together
-				form the entire application. These components are not different programs; they are different aspects of the program and shall be referred to independantly
-				in the interest of ODIN's modular focus.
+			<p class="description">ODIN is made up of different components &mdash; <strong><span class="color-tyr">Týr</span></strong>, <strong><span class="color-mimir">Mimir</span></strong>, <strong><span class="color-heimdall">Heimdall</span></strong> and <strong><span class="color-forseti">Forseti</span></strong>.
+				Each component serves a different purpose, but together form the entire application. These components are not different programs; they are different aspects of the program and shall be referred to independantly in the interest of ODIN's modular focus.
 			</p>
 			<h3 class="subtitle">Týr</h3>
 			<p class="description"><span class="color-tyr">Týr</span> is the front-end of the application &ndash; the GUI users will interact with, and is built in PyQt6. It's also responsible for taking data and saving it in various formats,
@@ -72,8 +71,8 @@
 			<h3 class="subtitle">Forseti</h3>
 			<p class="description"><span class="color-forseti">Forseti</span> is a GUI-toolkit for <span class="color-tyr">Týr</span>.
 				<span class="color-forseti">Forseti</span> allows you to customize <span class="color-tyr">Týr's</span> data fields and buttons to fit your organization's needs.
-				Maybe your org doesn't call tags 'Asset Tags', maybe they're called 'Part Number' or something. Using <span class="color-forseti">Forseti</span>, you can make this changes
-				and build a <span class="color-tyr">Týr</span> that fits your needs.
+				Maybe your organization doesn't use 'Asset Tags', maybe you prefer 'Part Number' instead. Or perhaps you want to add more entries to the GUI and change some existing ones.
+				Using <span class="color-forseti">Forseti</span>, you can make these changes and build a <span class="color-tyr">Týr</span> that fits your needs without having to dabble in code.
 			</p>
 			<p class="description">
 				There's also an option to reset <span class="color-tyr">Týr's</span> values back to their default settings, in case you want to revert your changes.
@@ -111,7 +110,9 @@
 				<h4>Databases:</h4>
 				<i class="fa-solid fa-turn-down arrow-p"></i>
 				<p><strong>Database Selector</strong>&mdash; A drop&ndash;down menu that let's you choose a database to access [upper&ndash;left corner of the GUI]</p>
-				<p class="p-2"><i class="fa-solid fa-circle-info"></i> You can create as many databases as you want. These all get stored within <span class="color-mimir">Mimir</span></p>
+				<p class="p-2"><i class="fa-solid fa-circle-info"></i> You can create as many databases as you want. These all get stored within <span class="color-mimir">Mimir</span>
+				<br>|----This feature is currently not available
+				</p>
 				<img class="p-img" src="img/tyr/tyr-database-menu.png" alt="Tyr Database Menu">
 				<h4>Default Data Entries:</h4>
 				<i class="fa-solid fa-turn-down arrow-p"></i>
