@@ -5,74 +5,6 @@
 # Description:  Crafting Tool for ODIN's Týr Module
 # #################################################################
 
-import darkdetect
-import os, sys, platform, string, os.path, shutil
-from PyQt6 import *
-from datetime import date
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
-from PyQt6.QtCore import *
-app_modules = True
-global root_dir
-if app_modules:
-    root_dir = os.path.dirname(os.path.abspath(__file__))
-    path_parent = os.path.dirname(os.getcwd())
-    root_dir = path_parent + "/ODIN"
-    sys.path.append('../ODIN')
-    from Tyr.clear_term import clear_term
-    clear_term()
-
-Forseti = False
-if Forseti:
-    with open('Tyr/Týr.py', 'r') as file:
-        data = file.readlines()
-
-    print("Options: \n1. main_labels \n2. drop_labels \n3. drop_sub_labels" 
-        + "\n")
-    mainChangeWhat = input("What would you like to change: ")
-    if '1' in mainChangeWhat:
-        clear_term()
-        print("Options: \n0. Reset to Default \n1. lb_site \n2.lb_location \n3.lb_product \n4.lb_make" 
-        + "\n")
-        changeWhatMainLabel = input("What 'main_label' would you like to change: ")
-        if '0' in changeWhatMainLabel:
-            chosen_change = 'main_labels'
-            print()
-            confirm_change = input(f"Set {chosen_change} to Týr default - y / n?: ")
-            if 'y' or 'Y' in confirm_change:
-                try:
-                    data[99] = f'    lb_id = "ID #:"\n'
-                    data[100] = f'    lb_site = "Site:"\n'
-                    data[101] = f'    lb_location = "Location:"\n'
-                    data[102] = f'    lb_product = "Selection:"\n'
-                    data[103] = f'    lb_make = "Make:"\n'
-                finally:
-                    clear_term()
-                    print(f"\nReset Complete")
-        elif '1' in changeWhatMainLabel:
-            newSite = input("Change 'Site' to: ")
-            print()
-            confirm_change = input(f"Changing 'lb_site' from 'Site' to '{newSite}' - y / n?: ")
-            if 'y' or 'Y' in confirm_change:
-                data[100] = f'    lb_site = "{newSite}:"\n'
-                print("\nLabel changed successfully!")
-        elif '4' in changeWhatMainLabel:
-            newMake = input("Change 'Make' to: ")
-            print()
-            confirm_change = input(f"Changing 'lb_make' from 'Make' to '{newMake}' - y / n?: ")
-            if 'y' or 'Y' in confirm_change:
-                data[103] = f'    lb_make = "{newMake}:"\n'
-                print("\nLabel changed successfully!")
-
-    with open('Tyr/Týr.py', 'w') as file:
-        file.writelines(data)
-
-# #################################################################
-# File name:    Týr.py
-# Author:       Need4Swede
-# Description:  Omniscient Database for Inventory Notation
-# #################################################################
-
 ## LIBRARY IMPORTS ################################################
 import darkdetect
 import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil, csv
@@ -86,6 +18,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 ## USER DIRECTORY IMPORTS #########################################
 app_modules = True
+global root_dir
 if app_modules:
     root_dir = os.path.dirname(os.path.abspath(__file__))
     path_parent = os.path.dirname(os.getcwd())
