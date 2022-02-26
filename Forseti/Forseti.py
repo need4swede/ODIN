@@ -7,9 +7,7 @@
 
 ## LIBRARY IMPORTS ################################################
 import darkdetect
-import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil, csv
-import pandas as pd
-from fpdf import FPDF
+import os, sqlite3, sys, platform, os.path, webbrowser, shutil
 from PyQt6 import *
 from csv import reader
 from datetime import date
