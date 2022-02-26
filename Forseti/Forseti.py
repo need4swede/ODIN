@@ -983,7 +983,6 @@ class EntryWindow(QWidget):
         self.stackedLayout.addWidget(self.page_db1)
         self.db_id = 0
         
-
     # When called, takes the input and checks which lb_drop# was selected
     # and launches a unique follow-up window if additional information is required
     def pass_Net_Adap(self):
