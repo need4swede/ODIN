@@ -64,32 +64,32 @@ function navigationalHighlighting() {
             }
         }
     // HIGHLIGHT BY VIEWPORT DETECTION
-        // const functionTyr = document.getElementById('jump-tyr');
-        // const functionMimir = document.getElementById('jump-mimir');
-        // const functionHeimdall = document.getElementById('jump-heimdall');
-        // const functionIntro = document.getElementById('end-intro');
-        // window.addEventListener('scroll', function (event) {
-        //     if (isInViewport(functionIntro)) {
-        //         resetNavColorsBlack('tyr');
-        //         resetNavColorsWhite('heimdall');
-        //         resetNavColorsWhite('mimir');
-        //     }
-        //     if (isInViewport(functionTyr)) {
-        //         addNavColorsBlack('tyr');
-        //         resetNavColorsWhite('mimir');
-        //         resetNavColorsWhite('heimdall');
-        //     }
-        //     if (isInViewport(functionMimir)) {
-        //         addNavColorsWhite('mimir');
-        //         resetNavColorsBlack('tyr');
-        //         resetNavColorsWhite('heimdall');
-        //     }
-        //     if (isInViewport(functionHeimdall)) {
-        //         addNavColorsWhite('heimdall');
-        //         resetNavColorsBlack('tyr');
-        //         resetNavColorsWhite('mimir');
-        //     }
-        // }, false);
+        const functionTyr = document.getElementById('jump-tyr');
+        const functionMimir = document.getElementById('jump-mimir');
+        const functionHeimdall = document.getElementById('jump-heimdall');
+        const functionIntro = document.getElementById('end-intro');
+        window.addEventListener('scroll', function (event) {
+            if (isInViewport(functionIntro)) {
+                resetNavColorsBlack('tyr');
+                resetNavColorsWhite('heimdall');
+                resetNavColorsWhite('mimir');
+            }
+            // if (isInViewport(functionTyr)) {
+            //     addNavColorsBlack('tyr');
+            //     resetNavColorsWhite('mimir');
+            //     resetNavColorsWhite('heimdall');
+            // }
+            // if (isInViewport(functionMimir)) {
+            //     addNavColorsWhite('mimir');
+            //     resetNavColorsBlack('tyr');
+            //     resetNavColorsWhite('heimdall');
+            // }
+            // if (isInViewport(functionHeimdall)) {
+            //     addNavColorsWhite('heimdall');
+            //     resetNavColorsBlack('tyr');
+            //     resetNavColorsWhite('mimir');
+            // }
+        }, false);
 } navigationalHighlighting();
 // COLLAPSE AND EXPAND ELEMENTS
 function collapseMenu() {
