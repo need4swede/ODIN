@@ -196,6 +196,16 @@ body {
      margin-left:5%;
 }
 
+.collapse {
+     cursor: pointer;
+   }
+
+.content {
+     margin-left: 5%;
+     display: none;
+     overflow: hidden;
+   }
+
 /*************************
 /* HEADER
 /*************************/
@@ -375,6 +385,7 @@ body {
 /*************************
 /* FOOTER
 /*************************/
+
 
 /******************************************
 /* ADDITIONAL STYLES
