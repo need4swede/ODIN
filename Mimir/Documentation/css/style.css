@@ -242,6 +242,10 @@ body {
 /* JS NAV
 /*********/
 
+.give-nav-odin-background-color {
+     background-color: black;
+}
+
 .give-nav-tyr-background-color {
      background-color: orange;
 }
