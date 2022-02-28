@@ -95,11 +95,11 @@
 				<span class="color-heimdall">Heimdall</span> will allow users to send requests to administrators in the form of notations, called <em>Ravens</em>, which admins can use to fulfill client
 				side requests. 
 			</p>
-			<p class="description">
+			<p id="end-intro" class="description">
 				Together, these modules allow administrators to create and manage multiple databases using an intuative and fully modular GUI, and designate access to appropriate end&ndash;users
 				with a seperate client&ndash;side GUI. This is a great way to manage assets, equipment, licenses, technical knowledge, and lots more <em>&mdash; and it is 100% free and open sourced.</em>
 			</p>
-			<img id="end-intro" class="p-img" src="https://github.com/need4swede/ODIN/blob/main/Mimir/Documentation/img/graph.png?raw=true" alt="tyr-gui">
+			<img class="p-img" src="https://github.com/need4swede/ODIN/blob/main/Mimir/Documentation/img/graph.png?raw=true" alt="tyr-gui">
 		</section>
 		<section class="section" id="functions">
 			<h2>Functions</h2>
@@ -117,7 +117,7 @@
 				<img class="p-img" src="img/tyr/tyr-database-menu.png" alt="Tyr Database Menu">
 				</div>
 				<i class="fa-solid fa-turn-down arrow-h4"></i>
-				<h4>Default Data Entries:</h4>
+				<h4>Adding Entries:</h4>
 				<div class="collapse"><i class="fa-solid fa-plus-minus arrow-p"></i></div>
 				<div class="content">
 					<p><strong>Site</strong>&mdash; Jobsite / District / Region</p>
@@ -163,6 +163,33 @@
 					<p><strong>Date</strong>&mdash; Date of Asset's last change</p>
 					<p class="p-2"><i class="fa-solid fa-circle-info"></i> <em>Dates</em> update manually whenever you add/change an entry. The most recent date will be shown exports</p>
 				</div>
+				<i class="fa-solid fa-turn-down arrow-h4"></i>
+				<h4 id="highlight-tyr">Searching Entries:</h4>
+				<div class="collapse"><i class="fa-solid fa-plus-minus arrow-p"></i></div>
+				<div class="content">
+					<p><strong>Search by ID</strong></p>
+					<p class="p-2"><i class="fa-solid fa-circle-info"></i> Every entry in your database has a unique ID number.
+					This ID number can be found in the first column of every entry. Use the ID Search Bar to input an ID number to search for your entry.</p>
+					<p><strong>Search by Tag Number</strong></p>
+					<p class="p-2"><i class="fa-solid fa-circle-info"></i> If you know an entry's asset tag number, use the Tag Search Bar to locate your
+					item within your database. If your asset tags follow a particular syntax, you can instruct the program to inherit this syntax by applying
+					a filter using <span class="color-forseti">Forseti.</span> You can read more about this feature further down the documentation.</p>
+					<p><strong>Search using <span class="color-mimir">Mimir</span></strong></p>
+					<p class="p-2"><i class="fa-solid fa-circle-info"></i> Built into <span class="color-tyr">Týr</span> is a console that lets you
+					send commands directly to <span class="color-mimir">Mimir.</span> Because <span class="color-mimir">Mimir</span> manages your database,
+					you can ask it to find items by their asset tags, serial number, location, assigned user, and a lot more. If you want to learn more about
+					interacting with <span class="color-mimir">Mimir</span> directly, read more about it further down the documentation where you'll find
+					a list of commands and how to use them.</p>
+				</div>
+				<i class="fa-solid fa-turn-down arrow-h4"></i>
+				<h4>Updating Existing Entries:</h4>
+				<div class="collapse"><i class="fa-solid fa-plus-minus arrow-p"></i></div>
+				<i class="fa-solid fa-turn-down arrow-h4"></i>
+				<h4>Deleting Entries:</h4>
+				<div class="collapse"><i class="fa-solid fa-plus-minus arrow-p"></i></div>
+				<i class="fa-solid fa-turn-down arrow-h4"></i>
+				<h4>Exporting Database:</h4>
+				<div class="collapse"><i class="fa-solid fa-plus-minus arrow-p"></i></div>
 			</section>
 			<section class="functions functions-mimir">
 				<span class="anchor" id="jump-mimir"></span>
