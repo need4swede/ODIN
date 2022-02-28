@@ -73,22 +73,23 @@ function navigationalHighlighting() {
                 resetNavColorsBlack('tyr');
                 resetNavColorsWhite('heimdall');
                 resetNavColorsWhite('mimir');
+                console.log('End Intro');
             }
-            // if (isInViewport(functionTyr)) {
-            //     addNavColorsBlack('tyr');
-            //     resetNavColorsWhite('mimir');
-            //     resetNavColorsWhite('heimdall');
-            // }
-            // if (isInViewport(functionMimir)) {
-            //     addNavColorsWhite('mimir');
-            //     resetNavColorsBlack('tyr');
-            //     resetNavColorsWhite('heimdall');
-            // }
-            // if (isInViewport(functionHeimdall)) {
-            //     addNavColorsWhite('heimdall');
-            //     resetNavColorsBlack('tyr');
-            //     resetNavColorsWhite('mimir');
-            // }
+            if (isInViewport(functionTyr)) {
+                addNavColorsBlack('tyr');
+                resetNavColorsWhite('mimir');
+                resetNavColorsWhite('heimdall');
+            }
+            if (isInViewport(functionMimir)) {
+                addNavColorsWhite('mimir');
+                resetNavColorsBlack('tyr');
+                resetNavColorsWhite('heimdall');
+            }
+            if (isInViewport(functionHeimdall)) {
+                addNavColorsWhite('heimdall');
+                resetNavColorsBlack('tyr');
+                resetNavColorsWhite('mimir');
+            }
         }, false);
 } navigationalHighlighting();
 // COLLAPSE AND EXPAND ELEMENTS
