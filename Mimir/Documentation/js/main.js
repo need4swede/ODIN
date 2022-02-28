@@ -65,7 +65,7 @@ function navigationalHighlighting() {
         }
     // HIGHLIGHT BY VIEWPORT DETECTION
         const functionTyr = document.getElementById('highlight-tyr');
-        const functionMimir = document.getElementById('jump-mimir');
+        const functionMimir = document.getElementById('highlight-mimir');
         const functionHeimdall = document.getElementById('jump-heimdall');
         const functionIntro = document.getElementById('end-intro');
         window.addEventListener('scroll', function (event) {
