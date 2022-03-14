@@ -1693,6 +1693,8 @@ class EntryWindow(QWidget):
         
         self.notes_db1.returnPressed.connect(btn_add.click)
         self.close()
+        # SETS ASSET TAG LINE IN FOCUS
+        self.assettag_db1.setFocus()
             
     def updatemanufacturerInput(self, index):
         self.manufacturer_db1.clear()

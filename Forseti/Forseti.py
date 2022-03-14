@@ -884,7 +884,7 @@ class EntryWindow(QWidget):
         self.item_db1_id = ""
         self.item_db1_id_label = QLabel(f"Forseti - {app_version}"
         "\n\nThis tool allows you to alter the names of the various entry items in Týr to fit your particular needs. "
-        "\nStart by selecting 'Change Layout' and then fill in the new name for each entry you would like changed. "
+        "\nStart by selecting 'Change Labels' and then fill in the new name for each entry you would like changed. "
         "\n\nClick the 'Build' button to apply the changes."
         "\nIf you want to revert back to Týr's default layout, you have the option to do so.")
         self.page_db1_layout.addWidget(self.item_db1_id_label)
@@ -896,7 +896,7 @@ class EntryWindow(QWidget):
         self.product_db1.addItem(lb_default_dropdown)
         self.product_db1.addItem(search_selection)  
         self.product_db1.addItem("")
-        self.product_db1.addItem("Change Layout")
+        self.product_db1.addItem("Change Labels")
         self.form_layout_db1.addRow("Options:", self.product_db1)
         product_selection = self.product_db1
         product_selection.activated.connect(self.pass_Net_Adap) # Passes active selection
