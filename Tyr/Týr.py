@@ -527,6 +527,7 @@ class MainWindow(QMainWindow):
                                  manufacturer, assigned, status, dates, notes)
 
         self.load_data()
+        global_Asset_Tag.clear()
 
     def clear(self):
         python = sys.executable
@@ -1440,6 +1441,19 @@ class EntryWindow(QWidget):
 
         self.db_id = 0
 
+        ## FLOATING TOOLS
+        global tool_Auto_Tag
+        tool_Auto_Tag = QCheckBox('Lock', self)
+        tool_Auto_Tag.move(80, 10)
+        tool_Auto_Tag.hide()
+        tool_Auto_Tag.stateChanged.connect(self.enable_Auto_Tag)
+
+    def enable_Auto_Tag(self, state):
+        if state == Qt.CheckState.Checked.value:
+            global_Asset_Tag.returnPressed.connect(btn_add.click)
+        else:
+            global_Asset_Tag.disconnect()
+
     # When called, takes the input and checks which lb_drop# was selected
     # and launches a unique follow-up window if additional information is required
     def pass_Net_Adap(self):
@@ -1599,6 +1613,7 @@ class EntryWindow(QWidget):
         btn_delete.show()
         btn_clear_2.show()
         btn_update.show()
+        tool_Auto_Tag.show()
         self.manufacturer_db1.addItems([lb_default_dropdown])
         self.form_layout_db1.addRow(lb_make, self.manufacturer_db1)
         selected_product = (str(product_selection.currentText()))
@@ -1608,6 +1623,8 @@ class EntryWindow(QWidget):
         
         
         self.form_layout_db1.addRow(lb_asset, self.assettag_db1)
+        global global_Asset_Tag
+        global_Asset_Tag = self.assettag_db1
         self.assettag_db1.returnPressed.connect(btn_add.click)
         self.package_db1 = QLineEdit()
         self.assigned_db1 = QComboBox()
