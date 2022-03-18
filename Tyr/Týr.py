@@ -275,19 +275,19 @@ class MainWindow(QMainWindow):
         btn_move.setFixedWidth(100)
         btn_move.setFixedHeight(35)
 
-        btn_clear = QPushButton("Refresh", self)
+        btn_refresh = QPushButton("Refresh", self)
+        btn_refresh.clicked.connect(self.refresh)
+        btn_refresh.setIcon(QIcon(png_refresh))
+        btn_refresh.setFixedWidth(100)
+        btn_refresh.setFixedHeight(35)
+        
+        global btn_clear
+        btn_clear = QPushButton("Clear", self)
         btn_clear.clicked.connect(self.clear)
-        btn_clear.setIcon(QIcon(png_refresh))
+        btn_clear.setIcon(QIcon(png_clear))
+        btn_clear.hide()
         btn_clear.setFixedWidth(100)
         btn_clear.setFixedHeight(35)
-        
-        global btn_clear_2
-        btn_clear_2 = QPushButton("Clear", self)
-        btn_clear_2.clicked.connect(self.clear_2)
-        btn_clear_2.setIcon(QIcon(png_clear))
-        btn_clear_2.hide()
-        btn_clear_2.setFixedWidth(100)
-        btn_clear_2.setFixedHeight(35)
 
         global search_bar
         self.search_box = QLineEdit()
@@ -399,8 +399,8 @@ class MainWindow(QMainWindow):
         layout_sub_buttons.addWidget(btn_search_general)
         layout_sub_buttons.addWidget(empty_widget)
         layout_sub_buttons.addWidget(btn_add)
+        layout_sub_buttons.addWidget(btn_refresh)
         layout_sub_buttons.addWidget(btn_clear)
-        layout_sub_buttons.addWidget(btn_clear_2)
         layout_sub_buttons.addWidget(btn_delete)
         layout_sub_buttons.addWidget(btn_update)
         layout_buttons.addLayout(layout_sub_buttons)
@@ -428,9 +428,11 @@ class MainWindow(QMainWindow):
         self.shortcut_run = QShortcut(QKeySequence('Ctrl+r'), self)
         self.shortcut_run.activated.connect(self.search_box_general.setFocus)
         self.shortcut_refresh = QShortcut(QKeySequence('Alt+r'), self)
-        self.shortcut_refresh.activated.connect(btn_clear.click)
+        self.shortcut_refresh.activated.connect(btn_refresh.click)
         self.shortcut_clear = QShortcut(QKeySequence('Alt+c'), self)
-        self.shortcut_clear.activated.connect(btn_clear_2.click)
+        self.shortcut_clear.activated.connect(btn_clear.click)
+        self.shortcut_wipe_mimir = QShortcut(QKeySequence('Alt+Backspace'), self)
+        self.shortcut_wipe_mimir.activated.connect(self.wipe_mimir)
         self.shortcut_csv2pdf = QShortcut(QKeySequence('Alt+p'), self)
         self.shortcut_csv2pdf.activated.connect(self.update_pdf)
         ## SEE 1293 FOR SEARCH SHORTCUT
@@ -533,22 +535,11 @@ class MainWindow(QMainWindow):
         global_Serial_Number.setText('SN: ')
         global_Serial_Number.setFocus()
 
-    def clear(self):
+    def refresh(self):
         python = sys.executable
         os.execl(python, python, * sys.argv)
-        if self.key == db_primary: 
-            self.item_info_window.item_db1_id_label.setText(lb_id)
-            self.item_info_window.site_db1.clear()
-            self.item_info_window.location_db1.clear()
-            self.item_info_window.assettag_db1.clear()
-            self.item_info_window.product_db1.clear()
-            self.item_info_window.package_db1.clear()
-            self.item_info_window.manufacturer_db1.clear()
-            self.item_info_window.assigned_db1.clear()
-            self.item_info_window.status_db1.clear()
-            self.item_info_window.notes_db1.clear()
 
-    def clear_2(self):
+    def clear(self):
         if self.key == db_primary:
             self.search_box.clear()
             self.search_box_asset_tag.clear() 
@@ -1187,6 +1178,16 @@ class MainWindow(QMainWindow):
         finally:
             pass
 
+    def wipe_mimir(self):
+        reply = QMessageBox.question(self, 'Wipe Mimir', 'Delete all Entries?',
+                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.Yes)
+        if reply == QMessageBox.StandardButton.Yes:
+            if os.path.isfile(inventory_db):
+                os.remove(inventory_db)
+                self.refresh()
+        else:
+            pass
+
     def update_pdf(self):
         export_dir = True
         if export_dir:
@@ -1630,7 +1631,7 @@ class EntryWindow(QWidget):
         search_bar_general.show()
         btn_search_general.show()
         btn_delete.show()
-        btn_clear_2.show()
+        btn_clear.show()
         btn_update.show()
         self.manufacturer_db1.addItems([lb_default_dropdown])
         self.form_layout_db1.addRow(lb_make, self.manufacturer_db1)

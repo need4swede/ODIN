@@ -176,19 +176,19 @@ class MainWindow(QMainWindow):
         btn_move.setFixedWidth(100)
         btn_move.setFixedHeight(35)
 
-        btn_clear = QPushButton("Refresh", self)
+        btn_refresh = QPushButton("Refresh", self)
+        btn_refresh.clicked.connect(self.clear)
+        btn_refresh.setIcon(QIcon(png_refresh))
+        btn_refresh.setFixedWidth(100)
+        btn_refresh.setFixedHeight(35)
+        
+        global btn_clear
+        btn_clear = QPushButton("Clear", self)
         btn_clear.clicked.connect(self.clear)
-        btn_clear.setIcon(QIcon(png_refresh))
+        btn_clear.setIcon(QIcon(png_clear))
+        btn_clear.hide()
         btn_clear.setFixedWidth(100)
         btn_clear.setFixedHeight(35)
-        
-        global btn_clear_2
-        btn_clear_2 = QPushButton("Clear", self)
-        btn_clear_2.clicked.connect(self.clear_2)
-        btn_clear_2.setIcon(QIcon(png_clear))
-        btn_clear_2.hide()
-        btn_clear_2.setFixedWidth(100)
-        btn_clear_2.setFixedHeight(35)
 
         global search_bar
         self.search_box = QLineEdit()
@@ -296,8 +296,8 @@ class MainWindow(QMainWindow):
         layout_sub_buttons.addWidget(btn_search_general)
         layout_sub_buttons.addWidget(empty_widget)
         layout_sub_buttons.addWidget(btn_add)
+        layout_sub_buttons.addWidget(btn_refresh)
         layout_sub_buttons.addWidget(btn_clear)
-        layout_sub_buttons.addWidget(btn_clear_2)
         layout_sub_buttons.addWidget(btn_delete)
         layout_sub_buttons.addWidget(btn_update)
         layout_buttons.addLayout(layout_sub_buttons)
@@ -323,9 +323,9 @@ class MainWindow(QMainWindow):
         self.shortcut_run = QShortcut(QKeySequence('Ctrl+r'), self)
         self.shortcut_run.activated.connect(self.search_box_general.setFocus)
         self.shortcut_refresh = QShortcut(QKeySequence('Alt+r'), self)
-        self.shortcut_refresh.activated.connect(btn_clear.click)
+        self.shortcut_refresh.activated.connect(btn_refresh.click)
         self.shortcut_clear = QShortcut(QKeySequence('Alt+c'), self)
-        self.shortcut_clear.activated.connect(btn_clear_2.click)
+        self.shortcut_clear.activated.connect(btn_clear.click)
         ## SEE 1293 FOR SEARCH SHORTCUT
         
 
@@ -424,7 +424,7 @@ class MainWindow(QMainWindow):
             self.item_info_window.status_db1.clear()
             self.item_info_window.notes_db1.clear()
 
-    def clear_2(self):
+    def clear(self):
         if self.key == db_primary:
             self.search_box.clear()
             self.search_box_asset_tag.clear() 
