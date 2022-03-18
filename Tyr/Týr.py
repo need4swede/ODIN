@@ -500,7 +500,7 @@ class MainWindow(QMainWindow):
             location = self.item_info_window.location_db1.currentText()
             product = self.item_info_window.product_db1.itemText(
                 self.item_info_window.product_db1.currentIndex())
-            package = self.item_info_window.package_db1.text()
+            package = self.item_info_window.package_db1.text().upper()
             assigned = self.item_info_window.assigned_db1.currentText()
             manufacturer = self.item_info_window.manufacturer_db1.itemText(
                 self.item_info_window.manufacturer_db1.currentIndex())
@@ -527,7 +527,11 @@ class MainWindow(QMainWindow):
                                  manufacturer, assigned, status, dates, notes)
 
         self.load_data()
+        tool_Scan_Mode.show()
         global_Asset_Tag.clear()
+        global_Serial_Number.clear()
+        global_Serial_Number.setText('SN: ')
+        global_Serial_Number.setFocus()
 
     def clear(self):
         python = sys.executable
@@ -1442,17 +1446,32 @@ class EntryWindow(QWidget):
         self.db_id = 0
 
         ## FLOATING TOOLS
-        global tool_Auto_Tag
-        tool_Auto_Tag = QCheckBox('Lock', self)
-        tool_Auto_Tag.move(80, 10)
-        tool_Auto_Tag.hide()
-        tool_Auto_Tag.stateChanged.connect(self.enable_Auto_Tag)
+        global tool_Scan_Mode
+        tool_Scan_Mode = QCheckBox('Scan Mode', self)
+        tool_Scan_Mode.move(80, 10)
+        tool_Scan_Mode.hide()
+        tool_Scan_Mode.stateChanged.connect(self.enable_Auto_Tag)
+    
+    def focus_AT(self):
+        # global_Serial_Number.clearFocus()
+        try:
+            global_Asset_Tag.disconnect()
+            global_Asset_Tag.setFocus()
+            global_Asset_Tag.returnPressed.connect(btn_add.click)
+        except:
+            global_Asset_Tag.setFocus()
+            global_Asset_Tag.returnPressed.connect(btn_add.click)
 
     def enable_Auto_Tag(self, state):
         if state == Qt.CheckState.Checked.value:
-            global_Asset_Tag.returnPressed.connect(btn_add.click)
+            global_Serial_Number.setFocus()
+            global_Serial_Number.returnPressed.connect(self.focus_AT)
         else:
-            global_Asset_Tag.disconnect()
+            try:
+                global_Asset_Tag.disconnect()
+                global_Serial_Number.disconnect()
+            except:
+                pass
 
     # When called, takes the input and checks which lb_drop# was selected
     # and launches a unique follow-up window if additional information is required
@@ -1602,7 +1621,7 @@ class EntryWindow(QWidget):
     # Inserts the information from the previous window, into our main window
     def find(self):
         # finding the content of current item in combo box
-        
+        product_selection.disconnect()
         btn_add.show()
         search_bar.show()
         btn_search.show()
@@ -1613,7 +1632,6 @@ class EntryWindow(QWidget):
         btn_delete.show()
         btn_clear_2.show()
         btn_update.show()
-        tool_Auto_Tag.show()
         self.manufacturer_db1.addItems([lb_default_dropdown])
         self.form_layout_db1.addRow(lb_make, self.manufacturer_db1)
         selected_product = (str(product_selection.currentText()))
@@ -1625,10 +1643,10 @@ class EntryWindow(QWidget):
         self.form_layout_db1.addRow(lb_asset, self.assettag_db1)
         global global_Asset_Tag
         global_Asset_Tag = self.assettag_db1
-        self.assettag_db1.returnPressed.connect(btn_add.click)
         self.package_db1 = QLineEdit()
+        global global_Serial_Number
+        global_Serial_Number = self.package_db1
         self.assigned_db1 = QComboBox()
-        self.package_db1.returnPressed.connect(btn_add.click)
         if lb_dvr or lb_netprinters or lb_locprinters in selected_product:
             self.assigned_db1.addItem("To Realm")
             self.assigned_db1.addItems(user_list)
@@ -1681,11 +1699,13 @@ class EntryWindow(QWidget):
             self.package_db1.insert("Type: "+ user_text_input)
         elif lb_winlaptops in selected_product:
             # showing content on the screen though label
+            user_text_input = user_text_input.upper()
             self.label.setText("Service Tag : " + user_text_input)
             self.form_layout_db1.addRow("Service Tag:", self.package_db1)
             self.package_db1.insert("SN: " + user_text_input)
         elif lb_chromebooks in selected_product:
             # showing content on the screen though label
+            user_text_input = user_text_input.upper()
             self.label.setText("Service Tag : " + user_text_input)
             self.form_layout_db1.addRow("Service Tag:", self.package_db1)
             self.package_db1.insert("SN: " + user_text_input)
