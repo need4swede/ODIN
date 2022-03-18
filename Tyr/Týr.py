@@ -502,7 +502,7 @@ class MainWindow(QMainWindow):
             location = self.item_info_window.location_db1.currentText()
             product = self.item_info_window.product_db1.itemText(
                 self.item_info_window.product_db1.currentIndex())
-            package = self.item_info_window.package_db1.text().upper()
+            package = self.item_info_window.package_db1.text().upper() # PACKAGE = SERIAL NUMBER
             try:
                 insert_Serial = str(package).split(": ")
                 serial_no_length = len(insert_Serial[1])
