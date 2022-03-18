@@ -158,7 +158,7 @@ if drop_sub_labels:
 app_info = True
 if app_info:
     app_title = "Týr"
-    app_version = "(Build: 2.2)"
+    app_version = "(Build: 2.8)"
     info_title = "About"
     app_description = "ODIN's Adaptive Asset Management System"
     app_framework = "Python 3.9 / PyQt6 / SQLite3"
