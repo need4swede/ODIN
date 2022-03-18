@@ -503,9 +503,18 @@ class MainWindow(QMainWindow):
             product = self.item_info_window.product_db1.itemText(
                 self.item_info_window.product_db1.currentIndex())
             package = self.item_info_window.package_db1.text().upper()
+            try:
+                insert_Serial = str(package).split(": ")
+                serial_no_length = len(insert_Serial[1])
+            except Exception:
+                pass
             assigned = self.item_info_window.assigned_db1.currentText()
             manufacturer = self.item_info_window.manufacturer_db1.itemText(
                 self.item_info_window.manufacturer_db1.currentIndex())
+            if serial_no_length == 7:
+                manufacturer = 'Dell'
+            elif serial_no_length == 8:
+                manufacturer = 'Lenovo'
             status = self.item_info_window.status_db1.itemText(
                 self.item_info_window.status_db1.currentIndex())
             dates = self.item_info_window.dates_db1.text()
@@ -854,7 +863,16 @@ class MainWindow(QMainWindow):
             elif general_input.startswith(arg_is_serial_no):
                 print("Searching by: Serial Number")
                 arg_serial_no = general_input.split(":")
-                print("Serial No:", arg_serial_no[1])
+                serial_no = arg_serial_no[1]
+                if serial_no[0] == " ":
+                    serial_no = serial_no.strip()
+                serial_no_length = len(serial_no)
+                search_bar_general.clear()
+                if serial_no_length == 7:
+                    print("Serial Number Match: Dell")
+                elif serial_no_length == 8:
+                    print("Serial Number Match: Lenovo")
+                print("Serial No:", serial_no)
             elif general_input.startswith(arg_is_location):
                 print("Searching by: Location")
                 arg_location = general_input.split(":")
