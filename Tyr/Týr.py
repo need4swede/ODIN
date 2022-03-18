@@ -610,12 +610,24 @@ class MainWindow(QMainWindow):
                 self.item_info_window.location_db1.clear()
                 self.item_info_window.location_db1.addItem(
                     str(first_matched_item[2]))
+                if lb_aesir in str(first_matched_item[1]):
+                    self.item_info_window.location_db1.addItems(lb_locations_aesir)
+                elif lb_vanir in str(first_matched_item[1]):
+                    self.item_info_window.location_db1.addItems(lb_locations_vanir)
                 self.item_info_window.product_db1.clear()
                 self.item_info_window.product_db1.addItem(
                     first_matched_item[3])
                 self.item_info_window.manufacturer_db1.clear()
                 self.item_info_window.manufacturer_db1.addItem(
-                    first_matched_item[4])    
+                    first_matched_item[4])
+                if lb_chromebooks in str(first_matched_item[3]):
+                    self.item_info_window.manufacturer_db1.addItems(lb_brands_chromebook)
+                elif lb_dvr in str(first_matched_item[3]):
+                    self.item_info_window.manufacturer_db1.addItems(lb_brands_dvr)
+                elif lb_netprinters in str(first_matched_item[3]) or lb_locprinters in str(first_matched_item[3]) or lb_toner in str(first_matched_item[3]):
+                    self.item_info_window.manufacturer_db1.addItems(lb_brands_printer)
+                elif lb_winlaptops in str(first_matched_item[3]):
+                    self.item_info_window.manufacturer_db1.addItems(lb_brands_laptop)    
                 self.item_info_window.assettag_db1.setText(
                     str(first_matched_item[5]))
                 self.item_info_window.package_db1.setText(
@@ -623,6 +635,7 @@ class MainWindow(QMainWindow):
                 self.item_info_window.assigned_db1.clear()
                 self.item_info_window.assigned_db1.addItem(
                     str(first_matched_item[7]))
+                self.item_info_window.assigned_db1.addItems(user_list)
                 self.item_info_window.status_db1.clear()
                 self.item_info_window.status_db1.addItem(lb_deployed)
                 self.item_info_window.status_db1.addItem(lb_instock)
@@ -664,9 +677,9 @@ class MainWindow(QMainWindow):
             print(str(first_matched_item[5]))
         except Exception:
             if self.key == db_primary:
-                self.item_info_window.item_db1_id_label.setText("ID #:")
+                self.item_info_window.item_db1_id_label.setText("ID:")
             elif self.key == db_secondary:
-                self.item_info_window.item_db2_id_label.setText("ID #:")
+                self.item_info_window.item_db2_id_label.setText("ID:")
             QMessageBox.information(
                 QMessageBox(), "Search", "Can not find the item")
 
@@ -714,12 +727,24 @@ class MainWindow(QMainWindow):
                                     self.item_info_window.location_db1.clear()
                                     self.item_info_window.location_db1.addItem(
                                         str(first_matched_item[2]))
+                                    if lb_aesir in str(first_matched_item[1]):
+                                        self.item_info_window.location_db1.addItems(lb_locations_aesir)
+                                    elif lb_vanir in str(first_matched_item[1]):
+                                        self.item_info_window.location_db1.addItems(lb_locations_vanir)
                                     self.item_info_window.product_db1.clear()
                                     self.item_info_window.product_db1.addItem(
                                         first_matched_item[3])
                                     self.item_info_window.manufacturer_db1.clear()
                                     self.item_info_window.manufacturer_db1.addItem(
-                                        first_matched_item[4])    
+                                        first_matched_item[4])
+                                    if lb_chromebooks in str(first_matched_item[3]):
+                                        self.item_info_window.manufacturer_db1.addItems(lb_brands_chromebook)
+                                    elif lb_dvr in str(first_matched_item[3]):
+                                        self.item_info_window.manufacturer_db1.addItems(lb_brands_dvr)
+                                    elif lb_netprinters in str(first_matched_item[3]) or lb_locprinters in str(first_matched_item[3]) or lb_toner in str(first_matched_item[3]):
+                                        self.item_info_window.manufacturer_db1.addItems(lb_brands_printer)
+                                    elif lb_winlaptops in str(first_matched_item[3]):
+                                        self.item_info_window.manufacturer_db1.addItems(lb_brands_laptop)    
                                     self.item_info_window.assettag_db1.setText(
                                         str(first_matched_item[5]))
                                     self.item_info_window.package_db1.setText(
@@ -727,6 +752,7 @@ class MainWindow(QMainWindow):
                                     self.item_info_window.assigned_db1.clear()
                                     self.item_info_window.assigned_db1.addItem(
                                         str(first_matched_item[7]))
+                                    self.item_info_window.assigned_db1.addItems(user_list)
                                     self.item_info_window.status_db1.clear()
                                     self.item_info_window.status_db1.addItem(lb_deployed)
                                     self.item_info_window.status_db1.addItem(lb_instock)
