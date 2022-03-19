@@ -511,10 +511,13 @@ class MainWindow(QMainWindow):
             assigned = self.item_info_window.assigned_db1.currentText()
             manufacturer = self.item_info_window.manufacturer_db1.itemText(
                 self.item_info_window.manufacturer_db1.currentIndex())
-            if serial_no_length == 7:
-                manufacturer = 'Dell'
-            elif serial_no_length == 8:
-                manufacturer = 'Lenovo'
+            try:
+                if serial_no_length == 7:
+                    manufacturer = 'Dell'
+                elif serial_no_length == 8:
+                    manufacturer = 'Lenovo'
+            except Exception:
+                pass
             status = self.item_info_window.status_db1.itemText(
                 self.item_info_window.status_db1.currentIndex())
             dates = self.item_info_window.dates_db1.text()
@@ -541,7 +544,10 @@ class MainWindow(QMainWindow):
         tool_Scan_Mode.show()
         global_Asset_Tag.clear()
         global_Serial_Number.clear()
-        global_Serial_Number.setText('SN: ')
+        if "SN:" in package:
+            global_Serial_Number.setText('SN: ')
+        if r"//" in package:
+            global_Serial_Number.setText('//192.168.')
         global_Serial_Number.setFocus()
 
     def refresh(self):
