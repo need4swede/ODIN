@@ -1,6 +1,8 @@
 # #################################################################
 # File name:    Týr.py
 # Author:       Need4Swede
+# Company:      N/A
+# Contact:      need4swede@gmail.com
 # Description:  Omniscient Database for Inventory Notation
 # #################################################################
 
@@ -158,7 +160,7 @@ if drop_sub_labels:
 app_info = True
 if app_info:
     app_title = "Týr"
-    app_version = "(Build: 2.8)"
+    app_version = "(Build: v2.8)"
     info_title = "About"
     app_description = "ODIN's Adaptive Asset Management System"
     app_framework = "Python 3.9 / PyQt6 / SQLite3"
@@ -642,7 +644,7 @@ class MainWindow(QMainWindow):
                 elif lb_netprinters in str(first_matched_item[3]) or lb_locprinters in str(first_matched_item[3]) or lb_toner in str(first_matched_item[3]):
                     self.item_info_window.manufacturer_db1.addItems(lb_brands_printer)
                 elif lb_winlaptops in str(first_matched_item[3]):
-                    self.item_info_window.manufacturer_db1.addItems(lb_brands_laptop)    
+                    self.item_info_window.manufacturer_db1.addItems(lb_brands_laptop)
                 self.item_info_window.assettag_db1.setText(
                     str(first_matched_item[5]))
                 self.item_info_window.package_db1.setText(
@@ -1540,8 +1542,6 @@ class EntryWindow(QWidget):
             # showing all the widgets
             self.show()
             pass
-        elif lb_desktop in (str(product_selection.currentText())):
-            pass
         elif lb_dvr in (str(product_selection.currentText())):
             super().__init__()
   
@@ -1557,7 +1557,7 @@ class EntryWindow(QWidget):
             # showing all the widgets
             self.show()
             pass
-        elif lb_chromebooks or lb_winlaptops in (str(product_selection.currentText())):
+        elif lb_chromebooks or lb_winlaptops or lb_desktop in (str(product_selection.currentText())):
             super().__init__()
   
             # setting title
@@ -1762,6 +1762,8 @@ class EntryWindow(QWidget):
             self.package_db1.insert("SN: " + user_text_input)
         
         self.notes_db1 = QLineEdit()
+        global global_Info
+        global_Info = self.notes_db1
         if "GPR" in user_text_input:
             self.manufacturer_db1.clear()
             self.manufacturer_db1.addItem("Canon")
