@@ -1657,7 +1657,7 @@ class EntryWindow(QWidget):
             self.label = QLabel(self)
             # setting geometry of the label
             self.label.setGeometry(25, 50, 200, 30)
-        elif lb_chromebooks or lb_winlaptops in (str(product_selection.currentText())):
+        elif lb_chromebooks or lb_winlaptops or lb_desktop in (str(product_selection.currentText())):
             self.setWindowTitle("Enter Service Tag")
             self.nameLabel.setText("Service Tag:")
             self.nameLabel.move(5, 25)
@@ -1748,13 +1748,7 @@ class EntryWindow(QWidget):
             self.label.setText("Type: " + user_text_input)
             self.form_layout_db1.addRow("Model of Toner:", self.package_db1)
             self.package_db1.insert("Type: "+ user_text_input)
-        elif lb_winlaptops in selected_product:
-            # showing content on the screen though label
-            user_text_input = user_text_input.upper()
-            self.label.setText("Service Tag : " + user_text_input)
-            self.form_layout_db1.addRow("Service Tag:", self.package_db1)
-            self.package_db1.insert("SN: " + user_text_input)
-        elif lb_chromebooks in selected_product:
+        elif lb_chromebooks or lb_winlaptops or lb_desktop in selected_product:
             # showing content on the screen though label
             user_text_input = user_text_input.upper()
             self.label.setText("Service Tag : " + user_text_input)
