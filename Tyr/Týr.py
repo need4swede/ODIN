@@ -8,7 +8,7 @@
 
 ## LIBRARY IMPORTS ################################################
 import darkdetect
-import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil, csv
+import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil, csv, simpleaudio
 import pandas as pd
 from fpdf import FPDF
 from PyQt6 import *
@@ -27,7 +27,7 @@ if app_modules:
     sys.path.append('../ODIN')
     import Mimisbrunnr.Mimisbrunnr_1 as Mimisbrunnr_1 
     import Mimisbrunnr.Mimisbrunnr_2 as Mimisbrunnr_2
-    from Tyr.clear_term import clear_term                        
+    from Tyr.clear_term import clear_term
     with open(root_dir + "/Tyr/users.csv", 'r') as read_obj:
         csv_reader = reader(read_obj)
         ad_users = list(csv_reader)
@@ -45,6 +45,11 @@ if app_dir:
     mimisbrunnr_dir = (root_dir + "/Mimisbrunnr")
     mimisbrunnr_export_dir = (mimisbrunnr_dir + "/exports/")
     tyr_dir = (root_dir + "/Tyr")
+    tyr_log_dir = (tyr_dir + "/logs/")
+    tyr_log = (tyr_log_dir + "log.txt")
+    tyr_log_tutorial = (tyr_log_dir + "tutorial.txt")
+    freya_dir = (root_dir + "/Freya")
+    sounds_dir = (freya_dir + "/sounds/")
     if not os.path.isdir(mimir_dir):
         os.makedirs(mimir_dir)
     if os.path.isdir(documentation_dir):
@@ -52,6 +57,8 @@ if app_dir:
             shutil.rmtree(mimir_dir + "/Documentation")
         shutil.copytree(documentation_dir, mimir_dir + "/Documentation")
         shutil.rmtree(documentation_dir) 
+    if not os.path.isdir(tyr_log_dir):
+        os.makedirs(tyr_log_dir)
     inventory_db = mimir_dir + "/Mimir.db"
     date_today = date.today()
     today = date_today.strftime("%B %d,  %Y")
@@ -59,6 +66,8 @@ if app_dir:
 if clean_dir:
     if os.path.isdir(root_dir + "/__pycache__"):
         shutil.rmtree(root_dir + "/__pycache__")
+    if os.path.isdir(freya_dir + "/__pycache__"):
+        shutil.rmtree(freya_dir + "/__pycache__")
     shutil.rmtree(mimisbrunnr_dir + "/__pycache__")
     shutil.rmtree(tyr_dir + "/__pycache__")
 ## ICONS/IMAGES  ##############
@@ -93,6 +102,20 @@ if darkdetect.isDark():
     png_move = root_dir + "/Tyr/Icons/dark/move.png"
     png_logo = root_dir + "/Tyr/Icons/dark/tyr-icon.png"
     png_db_primary = root_dir + "/Tyr/Icons/dark/tyr-icon.png"
+## SOUND FILES  ###############
+app_sounds = True
+if app_sounds:
+    freya_speak = simpleaudio.WaveObject.from_wave_file
+#### SOUNDS ###########
+    confirm_entry = freya_speak(sounds_dir + 'confirm_entry.wav')
+    deny_entry = freya_speak(sounds_dir + 'discard_entry.wav')
+
+    ## TUTORIAL ####
+    tyr_start = freya_speak(sounds_dir + 'tyr_start.wav')
+    tyr_serial = freya_speak(sounds_dir + 'tyr_serial.wav')
+    tyr_initialize = freya_speak(sounds_dir + 'tyr_initialize.wav')
+    tyr_entry_added = freya_speak(sounds_dir + 'tyr_entry_added.wav')
+#########################
 ## INPUT LABELS ###################################################
 ## MAIN LABELS  ###############
 main_labels = True
@@ -183,6 +206,18 @@ class MainWindow(QMainWindow):
         self.showMaximized()
         # self.showFullScreen() 
         # self.setMinimumSize(1200, 800)
+        global tutorial
+        if not os.path.isfile(tyr_log) or not os.path.isfile(tyr_log_tutorial):
+            with open(tyr_log, 'w') as f:
+                f.write('First time starting Tyr!\n')
+            with open(tyr_log_tutorial, 'w') as f:
+                f.write('Disabled')
+            tutorial = QMessageBox.question(self, 'Tutorial', 'Welcome to Týr!\n\nWould you like to use the Tutorial?',
+                                        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.Yes)
+            if tutorial == QMessageBox.StandardButton.Yes:
+                tyr_start.play()
+        else:
+            tutorial = QMessageBox.StandardButton.No
 
         # -------------------------------- #
         #       Menubar and Toolbar        #
@@ -551,6 +586,9 @@ class MainWindow(QMainWindow):
         if r"//" in package:
             global_Serial_Number.setText('//192.168.')
         global_Serial_Number.setFocus()
+        if tutorial == QMessageBox.StandardButton.Yes:
+            simpleaudio.stop_all()
+            tyr_entry_added.play()
 
     def refresh(self):
         python = sys.executable
@@ -854,6 +892,10 @@ class MainWindow(QMainWindow):
                             print("isMac")
                             readme = ("file:///" + readme)
                     webbrowser.open(readme)
+                elif help_requested[1] == "TUTORIAL":
+                    os.remove(tyr_log_tutorial)
+                    python = sys.executable
+                    os.execl(python, python, * sys.argv)
                 else:
                     QMessageBox.information(
                         QMessageBox(), "Help", "Add arguments to your help query to find answers."
@@ -1666,7 +1708,9 @@ class EntryWindow(QWidget):
             self.label = QLabel(self)
             # setting geometry of the label
             self.label.setGeometry(25, 50, 200, 30)
-        
+        if tutorial == QMessageBox.StandardButton.Yes:
+            simpleaudio.stop_all()
+            tyr_serial.play()
         self.line.returnPressed.connect(self.find)
   
     # Inserts the information from the previous window, into our main window
@@ -1779,7 +1823,11 @@ class EntryWindow(QWidget):
         self.close()
         # SETS ASSET TAG LINE IN FOCUS
         self.assettag_db1.setFocus()
-            
+
+        if tutorial == QMessageBox.StandardButton.Yes:
+            simpleaudio.stop_all()
+            tyr_initialize.play()
+
     def updatemanufacturerInput(self, index):
         self.manufacturer_db1.clear()
         categories = self.product_db1.itemData(index)
