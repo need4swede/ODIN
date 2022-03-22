@@ -8,7 +8,7 @@
 
 ## LIBRARY IMPORTS ################################################
 import darkdetect
-import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil, csv, simpleaudio
+import os, sqlite3, sys, platform, string, os.path, webbrowser, shutil, csv, simpleaudio, getpass
 import pandas as pd
 from fpdf import FPDF
 from PyQt6 import *
@@ -40,6 +40,7 @@ if app_modules:
 global inventory_db
 app_dir = True
 if app_dir:
+    user = getpass.getuser()
     documentation_dir = (root_dir + "/Documentation")
     mimir_dir = (root_dir + "/Mimir")
     mimisbrunnr_dir = (root_dir + "/Mimisbrunnr")
@@ -111,10 +112,11 @@ if app_sounds:
     deny_entry = freya_speak(sounds_dir + 'discard_entry.wav')
 
     ## TUTORIAL ####
-    tyr_start = freya_speak(sounds_dir + 'tyr_start.wav')
-    tyr_serial = freya_speak(sounds_dir + 'tyr_serial.wav')
-    tyr_initialize = freya_speak(sounds_dir + 'tyr_initialize.wav')
-    tyr_entry_added = freya_speak(sounds_dir + 'tyr_entry_added.wav')
+    tyr_start = freya_speak(sounds_dir + 'tutorial/Tyr/tyr_start.wav')
+    tyr_serial = freya_speak(sounds_dir + 'tutorial/Tyr/tyr_serial.wav')
+    tyr_IP = freya_speak(sounds_dir + 'tutorial/Tyr/tyr_ip_address.wav')
+    tyr_initialize = freya_speak(sounds_dir + 'tutorial/Tyr/tyr_initialize.wav')
+    tyr_entry_added = freya_speak(sounds_dir + 'tutorial/Tyr/tyr_entry_added.wav')
 #########################
 ## INPUT LABELS ###################################################
 ## MAIN LABELS  ###############
@@ -218,6 +220,7 @@ class MainWindow(QMainWindow):
                 tyr_start.play()
         else:
             tutorial = QMessageBox.StandardButton.No
+        AppLog('main', 'start', '', '', '')
 
         # -------------------------------- #
         #       Menubar and Toolbar        #
@@ -589,6 +592,8 @@ class MainWindow(QMainWindow):
         if tutorial == QMessageBox.StandardButton.Yes:
             simpleaudio.stop_all()
             tyr_entry_added.play()
+        ## APPLICATION LOG ##############################################
+        AppLog('main', product, manufacturer, description, package)
 
     def refresh(self):
         python = sys.executable
@@ -1710,7 +1715,10 @@ class EntryWindow(QWidget):
             self.label.setGeometry(25, 50, 200, 30)
         if tutorial == QMessageBox.StandardButton.Yes:
             simpleaudio.stop_all()
-            tyr_serial.play()
+            if lb_netprinters in (str(product_selection.currentText())) or lb_dvr in (str(product_selection.currentText())):
+                tyr_IP.play()
+            else:
+                tyr_serial.play()
         self.line.returnPressed.connect(self.find)
   
     # Inserts the information from the previous window, into our main window
@@ -1844,6 +1852,17 @@ class EntryWindow(QWidget):
         self.stackedLayout.setCurrentIndex(self.pageCombo.currentIndex())
         self.db_id = self.pageCombo.currentIndex()
         return self.db_id
+## TYR SYSTEM LOG #################################################
+def AppLog(log, type, make, asset, serial):
+    if log == "main":
+        with open(tyr_log, 'a') as f:
+            if type == "start":
+                f.write(f'{user} started Tyr ::: {today}\n')
+            else:
+                f.write(f'{user} added a {type} ::: {today}\n')
+                f.write(f":: {make} - ")
+                f.write(f"{asset} - ")
+                f.write(f"{serial}\n")
 ## MIMIR IMPORT ###################################################
 class mainWin(QMainWindow):
     def __init__(self, parent = None):
