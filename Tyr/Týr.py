@@ -593,7 +593,10 @@ class MainWindow(QMainWindow):
             simpleaudio.stop_all()
             tyr_entry_added.play()
         ## APPLICATION LOG ##############################################
-        AppLog('main', product, manufacturer, description, package)
+        try:
+            AppLog('main', product, manufacturer, description, package)
+        except Exception:
+            pass
 
     def refresh(self):
         python = sys.executable
