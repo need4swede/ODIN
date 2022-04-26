@@ -563,8 +563,27 @@ class MainWindow(QMainWindow):
             dates = self.item_info_window.dates_db1.text()
             notes = self.item_info_window.notes_db1.text()
             user = self.item_info_window.site_db1.currentText()
+            for row_count in range(1, 9999):
+                try:
+                    if "None" in Mimisbrunnr_1.search_row(row_count):
+                        break
+                    if description in Mimisbrunnr_1.search_row(row_count):
+                        if description == "":
+                            pass
+                        else:
+                            identical_AT = QMessageBox.question(self, 'Warning', 'An item with that Asset Tag already exists in your database\n\nWould you like add it anyway?',
+                                        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.Yes)
+                            if identical_AT == QMessageBox.StandardButton.No:
+                                return
+                    if package in Mimisbrunnr_1.search_row(row_count):
+                        QMessageBox.information(
+                            QMessageBox(), "Warning", "This item's serial number matches that of an existing item in your database\n\nMatched Item ID Number: {}".format(row_count))
+                        self.search_box.setText(str(row_count))
+                        return
+                except Exception:
+                    pass
             Mimisbrunnr_1.add_row(user, location, product, manufacturer, description, package,
-                                  assigned, status, dates, notes)
+                assigned, status, dates, notes)
         elif self.key == db_secondary:
             description = self.item_info_window.description_db2.text()
             location = self.item_info_window.location_db2.text()
@@ -578,7 +597,7 @@ class MainWindow(QMainWindow):
             dates = self.item_info_window.dates_db2.text()
             notes = self.item_info_window.notes_db2.text()
             Mimisbrunnr_2.add_row(location, description, package, product,
-                                 manufacturer, assigned, status, dates, notes)
+                manufacturer, assigned, status, dates, notes)
 
         self.load_data()
         tool_Scan_Mode.show()
@@ -766,7 +785,7 @@ class MainWindow(QMainWindow):
         try:
             try:
                 if self.key == db_primary:
-                    for row_count in range(1,500):
+                    for row_count in range(1,9999):
                         # clear_term()
                         ## list_row lists all the values in the given row using .search_row
                         list_row = Mimisbrunnr_1.search_row(row_count)
@@ -919,6 +938,7 @@ class MainWindow(QMainWindow):
                 self.search_box_asset_tag.clear()
                 self.search_box.setText(str(row_count))
             elif general_input.startswith(arg_is_serial_no):
+                run_search = True
                 print("Searching by: Serial Number")
                 arg_serial_no = general_input.split(":")
                 serial_no = arg_serial_no[1]
@@ -926,11 +946,98 @@ class MainWindow(QMainWindow):
                     serial_no = serial_no.strip()
                 serial_no_length = len(serial_no)
                 search_bar_general.clear()
-                if serial_no_length == 7:
+                if serial_no_length < 1:
+                    run_search == False
+                elif serial_no_length == 7:
                     print("Serial Number Match: Dell")
                 elif serial_no_length == 8:
                     print("Serial Number Match: Lenovo")
                 print("Serial No:", serial_no)
+                try:
+                    try:
+                        if self.key == db_primary:
+                            for row_count in range(1,9999):
+                                # clear_term()
+                                ## list_row lists all the values in the given row using .search_row
+                                list_row = Mimisbrunnr_1.search_row(row_count)
+                                ## item_asset_tag equals the fifth element in the row, which is the asset tag
+                                try:
+                                    item_serial_num = list_row[6]
+                                except Exception:
+                                    for x in range(1,1):
+                                        pass
+                                ## If the tag that you searched for shows up in the above query
+                                ## Populate the forms
+                                try:
+                                    item_serial_num = list_row[6]
+                                except Exception:
+                                    for x in range(1,1):
+                                        pass
+                                ## If the tag that you searched for shows up in the above query
+                                ## Populate the forms
+                                try:
+                                    if serial_no in item_serial_num:
+                                        while run_search:
+                                            first_matched_item = Mimisbrunnr_1.search_row(row_count)
+                                            self.item_info_window.item_db1_id_label.setText(
+                                                "ID #:{:>35}".format(row_count))
+                                            self.item_info_window.site_db1.clear()
+                                            self.item_info_window.site_db1.addItem(
+                                                str(first_matched_item[1]))
+                                            self.item_info_window.location_db1.clear()
+                                            self.item_info_window.location_db1.addItem(
+                                                str(first_matched_item[2]))
+                                            if lb_aesir in str(first_matched_item[1]):
+                                                self.item_info_window.location_db1.addItems(lb_locations_aesir)
+                                            elif lb_vanir in str(first_matched_item[1]):
+                                                self.item_info_window.location_db1.addItems(lb_locations_vanir)
+                                            self.item_info_window.product_db1.clear()
+                                            self.item_info_window.product_db1.addItem(
+                                                first_matched_item[3])
+                                            self.item_info_window.manufacturer_db1.clear()
+                                            self.item_info_window.manufacturer_db1.addItem(
+                                                first_matched_item[4])
+                                            if lb_chromebooks in str(first_matched_item[3]):
+                                                self.item_info_window.manufacturer_db1.addItems(lb_brands_chromebook)
+                                            elif lb_dvr in str(first_matched_item[3]):
+                                                self.item_info_window.manufacturer_db1.addItems(lb_brands_dvr)
+                                            elif lb_netprinters in str(first_matched_item[3]) or lb_locprinters in str(first_matched_item[3]) or lb_toner in str(first_matched_item[3]):
+                                                self.item_info_window.manufacturer_db1.addItems(lb_brands_printer)
+                                            elif lb_winlaptops in str(first_matched_item[3]):
+                                                self.item_info_window.manufacturer_db1.addItems(lb_brands_laptop)    
+                                            self.item_info_window.assettag_db1.setText(
+                                                str(first_matched_item[5]))
+                                            self.item_info_window.package_db1.setText(
+                                                str(first_matched_item[6]))
+                                            self.item_info_window.assigned_db1.clear()
+                                            self.item_info_window.assigned_db1.addItem(
+                                                str(first_matched_item[7]))
+                                            self.item_info_window.assigned_db1.addItems(user_list)
+                                            self.item_info_window.status_db1.clear()
+                                            self.item_info_window.status_db1.addItem(lb_deployed)
+                                            self.item_info_window.status_db1.addItem(lb_instock)
+                                            self.item_info_window.status_db1.addItem(lb_onorder)
+                                            self.item_info_window.status_db1.addItem(lb_oos_repair)
+                                            self.item_info_window.status_db1.addItem(lb_oos_obsolete)
+                                            for x in range(0, 200):
+                                                self.item_info_window.status_db1.addItem("Quantity: " + str(x))
+                                            self.item_info_window.dates_db1.setText(
+                                                today)
+                                            self.item_info_window.notes_db1.setText(
+                                                str(first_matched_item[10]))
+                                            self.search_box.setText(str(row_count))
+                                            self.search_box_general.clear()
+                                            self.search_box_asset_tag.clear()
+                                            break
+                                        break
+                                    else:
+                                        pass
+                                except Exception:
+                                    pass
+                    except Exception:
+                        pass
+                except Exception:
+                    pass
             elif general_input.startswith(arg_is_location):
                 print("Searching by: Location")
                 arg_location = general_input.split(":")
