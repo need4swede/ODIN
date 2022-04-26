@@ -205,9 +205,10 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setWindowIcon(QIcon(png_lab))
         self.setWindowTitle(app_title)
-        # self.showMaximized()
-        # self.showFullScreen() 
-        self.setMinimumSize(1200, 800)
+        self.showMaximized()
+        # self.showFullScreen()
+        if platform.system() == "Windows": 
+            self.setMinimumSize(1200, 800)
         global tutorial
         if not os.path.isfile(tyr_log) or not os.path.isfile(tyr_log_tutorial):
             with open(tyr_log, 'w') as f:
@@ -2057,7 +2058,8 @@ if __name__ == "__main__":
         Mimisbrunnr_2.create_table_db2()
 
     app = QApplication(sys.argv)
-    app.setStyleSheet(qdarktheme.load_stylesheet())
+    if platform.system() == "Windows":
+        app.setStyleSheet(qdarktheme.load_stylesheet())
     if QDialog.accepted:
         window = MainWindow()
         window.show()
